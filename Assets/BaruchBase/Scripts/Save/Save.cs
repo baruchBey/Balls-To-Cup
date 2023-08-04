@@ -28,8 +28,6 @@ namespace Baruch
         {
             if (Exists())
             {
-                Debug.Log("LOADED");
-
                 FileStream fileStream = File.Open(_savePath, FileMode.Open);
                 BinaryFormatter binaryFormatter = new();
                 var saveDataArray = (SaveData[])binaryFormatter.Deserialize(fileStream);

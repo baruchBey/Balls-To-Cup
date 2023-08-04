@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 73b3b26a5a6e4ad44a78f3357469560d
+guid: 70ace15c6e7f40344a6c46333326d614
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Glass
-    second: {fileID: 2100000, guid: 70f15bd1fae684344a9437bb048b2e2d, type: 2}
+    second: {fileID: 2100000, guid: 906f0777ea92b454f9a446900be89cbe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -63,7 +63,7 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
-    meshOptimizationFlags: -1
+    meshOptimizationFlags: 1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
@@ -76,7 +76,7 @@ ModelImporter:
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0

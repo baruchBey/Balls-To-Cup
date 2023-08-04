@@ -6,11 +6,28 @@ namespace Baruch.Extension
 {
     public static class TransformExtensions
     {
+
+        public static void ForEach(this Transform transform, Action<Transform> action)
+        {
+
+            for (int i = 0; i < transform.childCount; i++)
+                action(transform.GetChild(i));
+
+        }
+        public static Transform[] GetChilds(this Transform transform)
+        {
+            Transform[] childs = new Transform[transform.childCount];
+
+            for (int i = 0; i < transform.childCount; i++)
+                childs[i] = transform.GetChild(i);
+
+            return childs;
+        }
         public static void DestroyAllChildren(this Transform transform)
         {
             foreach (Transform child in transform)
                 UnityEngine.Object.Destroy(child.gameObject);
-        } 
+        }
         public static void DestroyImmediateAllChildren(this Transform transform)
         {
             foreach (Transform child in transform)

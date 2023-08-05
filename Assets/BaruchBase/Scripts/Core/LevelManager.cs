@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +16,7 @@ namespace Baruch
 
        
         [HideInInspector]public Level CurrentLevel;
-        internal bool IsLevelSuccess => CurrentLevel.IsLevelSuccess;
+        internal bool IsLevelSuccess => CurrentLevel.IsCompleted;
 
         public static bool Active { get; internal set; }
 
@@ -26,32 +27,37 @@ namespace Baruch
 
         public void Init()
         {
-            
+            Level.OnLevelComplete += OnLevelEnd.Invoke;
+            Level.OnLevelFail += OnLevelEnd.Invoke;
         }
 
        
 
         public void Build()
         {
-            CurrentLevel = Instantiate(_levels[LevelIndex],transform);            
+            CurrentLevel = Instantiate(_levels[LevelIndex%_levels.Length],transform);            
             CurrentLevel.Configure();
             OnLevelBuild?.Invoke();
             Active = true;
         }
         public void Unload()
         {
+            Destroy(CurrentLevel.gameObject);
+
             Active = false;
-            Destroy(CurrentLevel);
         }
 
-        internal void NextLevel()
+        internal static void NextLevel()
         {
-            throw new NotImplementedException();
+            Instance.Unload();
+            LevelIndex++;
+            DOVirtual.DelayedCall(Time.deltaTime * 1.1f, Instance.Build);//1 FrameDelay
         }
 
-        internal void RestartLevel()
+        internal static void RestartLevel()
         {
-            throw new NotImplementedException();
+            Instance.Unload();
+            DOVirtual.DelayedCall(Time.deltaTime * 1.1f, Instance.Build);//1 FrameDelay
         }
     }
 }

@@ -19,23 +19,25 @@ namespace Baruch
         public Transform Tube;
         public Transform FreeMarbleParent;
 
+        public int Target => _target;
         [SerializeField] int _target = 20;
+
         [SerializeField] Transform _marbleParent;
         [Header("Level")]
         [SerializeField] Finish _finish;
         [SerializeField] TextMeshPro _marbleCountText;
         [SerializeField,Range(1f,3f)] float _marbleSize = 1f;
 
-        int _marbleInBottleCount => _marbleParent.childCount;
+        public int MarbleInBottleCount => _marbleParent.childCount;
 
-        public bool IsLevelSuccess => _levelStatus == LevelStatus.Success;
 
+        public bool IsCompleted => _levelStatus.HasFlag(LevelStatus.TargetReached);
 #if UNITY_EDITOR
         [Header("EDITOR ONLY")]
         [SerializeField] Vector2[] _marblePositions;
 
 #endif
-
+        public int TotalMarbleCount => _totalMarbleCount;
         int _totalMarbleCount;
 
         public static event Action OnLevelComplete;
@@ -46,23 +48,22 @@ namespace Baruch
         {
             _finish.SetTarget(_target);
             MarbleSize = _marbleSize;
+
             OnTargetReached += CheckLevelStatus;
-            //OnMarbleExit += CheckLevelStatus;
             OnMarbleExit += UpdateText;
             OnMarbleWasted += CheckLevelStatus;
 
-            _marbleCountText.text = _marbleInBottleCount.ToString();
+            _marbleCountText.text = MarbleInBottleCount.ToString();
         }
 
         private void UpdateText()
         {
-            _marbleCountText.text = _marbleInBottleCount.ToString();
+            _marbleCountText.text = MarbleInBottleCount.ToString();
         }
 
         private void OnDisable()
         {
             OnTargetReached -= CheckLevelStatus;
-            //OnMarbleExit -= CheckLevelStatus;
             OnMarbleExit -= UpdateText;
 
             OnMarbleWasted -= CheckLevelStatus;
@@ -100,7 +101,6 @@ namespace Baruch
 #if UNITY_EDITOR
             Debug.Log("LEVEL FAIL");
 #endif
-
             OnLevelFail?.Invoke();
         }
 
@@ -167,11 +167,10 @@ namespace Baruch
     public class LevelEditor : Editor
     {
         int _total;
-        int _inBottle => _marbleParent.childCount;
-        Transform _marbleParent;
+        int _inBottle => ((Level)target).MarbleInBottleCount;
+
         private void OnEnable()
         {
-            _marbleParent = ((Level)target).transform.FindDeepChild("Marbles");
             _total = _inBottle;
         }
         public override void OnInspectorGUI()

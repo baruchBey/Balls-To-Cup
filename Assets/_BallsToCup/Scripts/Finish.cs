@@ -33,7 +33,7 @@ namespace Baruch
                     _marbleCountText.transform.DOPunchScale(Vector2.one * 0.13f, 0.2f, 3);
             }
 
-            if (_finishedMarbles.Count == _targetCount)
+            if (_finishedMarbles.Count >= _targetCount)
                 OnTargetReached.Invoke();
 
 

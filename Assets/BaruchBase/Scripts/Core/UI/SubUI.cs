@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Baruch.Extension;
+using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace Baruch.UI
@@ -7,6 +9,8 @@ namespace Baruch.UI
     public abstract class SubUI : MonoBehaviour, IInit
     {
         protected CanvasGroup CanvasGroup;
+        [SerializeField] protected SlidingUIElement[] SlidingUIElements;
+
         private void Awake()
         {
             CanvasGroup = GetComponent<CanvasGroup>();
@@ -14,15 +18,44 @@ namespace Baruch.UI
         public abstract void Init();
 
 
-        public abstract void OnEnable();
-        public abstract void OnDisable();
+        public virtual void Enable()
+        {
+            SlidingUIElements.ForEach(s => s.Slide(true));
+
+        }
+        public virtual void Disable()
+        {
+            SlidingUIElements.ForEach(s => s.Slide(false));
+            DOVirtual.DelayedCall(SlidingUIElement.SLIDE_TIME, () => { gameObject.SetActive(false); });
+        }
 
         internal void SetActive(bool v)
         {
-            gameObject.SetActive(v);
+            if (v)
+            {
+                gameObject.SetActive(true);
+                Enable();
+            }
+            else
+            {
+                Disable();
+            }
         }
 
 
+#if UNITY_EDITOR
+        [ContextMenu("CaptureEnabled")]
+        void CaptureEnabled()
+        {
+            SlidingUIElements.ForEach(z => z.SetEnabledPosition());
+        }
+        [ContextMenu("CaptureDisabled")]
+        void CaptureDisabled()
+        {
+            SlidingUIElements.ForEach(z => z.SetDisabledPosition());
+
+        }
+#endif
 
     }
 }

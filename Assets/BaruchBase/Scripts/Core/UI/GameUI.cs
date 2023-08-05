@@ -1,26 +1,41 @@
 using Baruch.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Baruch
 {
     public class GameUI : SubUI
     {
+        [SerializeField] RectTransform _ballCountParent;
+        [SerializeField] TMP_Text _ballCount;
+        [SerializeField] Image[] _balls;
+        
         public override void Init()
         {
-            throw new System.NotImplementedException();
+            LevelManager.OnLevelBuild += LevelManager_OnLevelBuild;
+            BottleExit.OnMarbleExit += BottleExit_OnMarbleExit;
         }
 
-        public override void OnDisable()
+        private void LevelManager_OnLevelBuild()
         {
-            throw new System.NotImplementedException();
+            for (int i = 0; i < _balls.Length; i++)
+            {
+                _balls[i].color = ColorManager.CurrentPalette.Colors[i];
+            }
+            _ballCount.text = LevelManager.Instance.CurrentLevel.MarbleInBottleCount.ToString();
+
+
         }
 
-        public override void OnEnable()
+        private void BottleExit_OnMarbleExit()
         {
-            throw new System.NotImplementedException();
+            _ballCount.text = LevelManager.Instance.CurrentLevel.MarbleInBottleCount.ToString();
+
         }
+
 
     }
 }

@@ -60,7 +60,8 @@ namespace Baruch
 
         void Update()
         {
-            RenderMarbles();
+            if(LevelManager.Active)
+                RenderMarbles();
 
         }
        

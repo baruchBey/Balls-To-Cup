@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8090611050037569347}
-  - component: {fileID: 3768546206181922824}
   m_Layer: 0
   m_Name: Tube1
   m_TagString: Untagged
@@ -35,33 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &3768546206181922824
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702120098326973972}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!1 &2211493460373886425
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,8 +185,6 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: 26.471003, y: 1.0900501}
-  - {x: 26.198574, y: -0.026198206}
-  - {x: 25.131155, y: -1.2469273}
   - {x: 23.737518, y: -1.3875064}
   - {x: 19.774237, y: -4.293666}
   - {x: 14.703392, y: -5.712627}
@@ -258,8 +228,6 @@ EdgeCollider2D:
   - {x: 14.965043, y: 1.0291928}
   - {x: 17.459286, y: 2.0456889}
   - {x: 18.800743, y: 3.0099719}
-  - {x: 18.738764, y: 4.114379}
-  - {x: 19.8215, y: 5.417058}
   - {x: 21.257391, y: 5.6812034}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
@@ -275,7 +243,6 @@ GameObject:
   m_Component:
   - component: {fileID: 568624607154655478}
   - component: {fileID: 6809176531108476739}
-  - component: {fileID: 6570669701711439540}
   - component: {fileID: 4924817919513710505}
   m_Layer: 6
   m_Name: BottleExit
@@ -292,7 +259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8952228895599933502}
   m_LocalRotation: {x: -0, y: -0, z: -0.38268292, w: 0.92387974}
-  m_LocalPosition: {x: 31.1, y: 6.0000005, z: 0}
+  m_LocalPosition: {x: 32.75, y: 7.54, z: 0}
   m_LocalScale: {x: 6.2843, y: 2.1271, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -344,33 +311,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.321849, y: 2.019547}
   m_EdgeRadius: 0
---- !u!50 &6570669701711439540
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8952228895599933502}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &4924817919513710505
 MonoBehaviour:
   m_ObjectHideFlags: 0

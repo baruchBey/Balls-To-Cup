@@ -69,14 +69,13 @@ MonoBehaviour:
   m_text: 100<sprite=0>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e947ea9041a0f14ea592c2312f0ad16, type: 2}
-  m_sharedMaterial: {fileID: 340809977130220513, guid: 6e947ea9041a0f14ea592c2312f0ad16,
-    type: 2}
+  m_sharedMaterial: {fileID: 340809977130220513, guid: 6e947ea9041a0f14ea592c2312f0ad16, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279900698
   m_fontColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -147,7 +146,6 @@ GameObject:
   - component: {fileID: 5972507231037274162}
   - component: {fileID: 1185637585741934952}
   - component: {fileID: 2546697776380169290}
-  - component: {fileID: 456874830140939235}
   m_Layer: 5
   m_Name: Balance Indicator
   m_TagString: Untagged
@@ -169,7 +167,7 @@ RectTransform:
   m_Children:
   - {fileID: 7477566475525685510}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -197,33 +195,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593613458212521868}
   m_CullTransparentMesh: 1
---- !u!114 &456874830140939235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5593613458212521868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300098, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.89

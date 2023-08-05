@@ -9,7 +9,12 @@ namespace Baruch.Util
     {
         public static IEnumerable<T> FindInterfacesOfType<T>(bool includeInActive = false)
         {
-            return Object.FindObjectsOfType<MonoBehaviour>(includeInActive).OfType<T>();
+            return Object.FindObjectsOfType<MonoBehaviour>(includeInActive).OrderBy(m =>
+            {
+                var t = m.transform;
+
+                return t.GetSiblingIndex() + (t.parent ? t.parent.GetSiblingIndex()*100 : 0);
+            }).OfType<T>();
         }
     }
 }

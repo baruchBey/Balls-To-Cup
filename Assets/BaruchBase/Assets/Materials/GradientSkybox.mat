@@ -21,8 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GradientSkybox
-  m_Shader: {fileID: -6465566751694194690, guid: 7eaf48bb7dc0b0a4fbf06ac95c4b9862,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7eaf48bb7dc0b0a4fbf06ac95c4b9862, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -54,6 +53,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
+    - _Bottom: {r: 0.60784316, g: 0.19607845, b: 0.9960785, a: 1}
     - _Color0: {r: 0.6272156, g: 0.5262745, b: 0.8627451, a: 0}
     - _Color1: {r: 0.7676508, g: 0.5223834, b: 0.8584906, a: 0}
+    - _Top: {r: 0.9372549, g: 0.57254905, b: 1, a: 1}
   m_BuildTextureStacks: []

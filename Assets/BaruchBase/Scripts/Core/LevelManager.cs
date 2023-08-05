@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Baruch
 {
@@ -16,6 +15,7 @@ namespace Baruch
 
        
         [HideInInspector]public Level CurrentLevel;
+        internal bool IsLevelSuccess => CurrentLevel.IsLevelSuccess;
 
         public static bool Active { get; internal set; }
 
@@ -26,10 +26,10 @@ namespace Baruch
 
         public void Init()
         {
-             
+            
         }
 
-
+       
 
         public void Build()
         {
@@ -38,7 +38,20 @@ namespace Baruch
             OnLevelBuild?.Invoke();
             Active = true;
         }
+        public void Unload()
+        {
+            Active = false;
+            Destroy(CurrentLevel);
+        }
 
-       
+        internal void NextLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void RestartLevel()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

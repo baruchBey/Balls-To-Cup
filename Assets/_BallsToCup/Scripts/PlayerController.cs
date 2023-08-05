@@ -26,7 +26,7 @@ namespace Baruch
             _middleOfScreen = new Vector2(Screen.width, Screen.height) / 2f;
         }
 
-        void FixedUpdate()
+        void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {

@@ -24,6 +24,7 @@ namespace Baruch.UI
             _audioToggle.onValueChanged.AddListener(OnVolumeToggle);
 
             _resume.onClick.AddListener(Deactivate);
+            _resume.onClick.AddListener(Core.Game.Resume);
         }
 
         public void Activate()

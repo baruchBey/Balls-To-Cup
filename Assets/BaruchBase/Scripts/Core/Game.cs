@@ -1,4 +1,5 @@
 ﻿using Baruch.Extension;
+using System;
 using UnityEngine;
 using static Baruch.Util.BaruchUtil;
 
@@ -8,8 +9,17 @@ namespace Baruch.Core
     {
         public static bool IsInitialized;
 
+        private static GameState _gameState;
+        public static GameState GameState { get => _gameState; set { _gameState = value; OnStateChange?.Invoke(value); } }
+        public static event Action<GameState> OnStateChange;
+
         public static void Initialize()
         {
+
+            LevelManager.OnLevelBuild += LevelManager_OnLevelBuild;
+            LevelManager.OnLevelEnd += LevelManager_OnLevelEnd;
+
+
             IsInitialized = false;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = 60;
@@ -24,8 +34,25 @@ namespace Baruch.Core
             IsInitialized = true;
 
         }
-        
 
-       
+        private static void LevelManager_OnLevelEnd()
+        {
+            GameState = LevelManager.Instance.IsLevelSuccess ? GameState.LevelCompleted : GameState.LevelFailed;
+        }
+
+        private static void LevelManager_OnLevelBuild()
+        {
+            GameState = GameState.Play;
+        }
+
+        internal static void Pause()
+        {
+            GameState = GameState.Pause;
+        }
+
+        internal static void Resume()
+        {
+            GameState = GameState.Play;
+        }
     }
 }

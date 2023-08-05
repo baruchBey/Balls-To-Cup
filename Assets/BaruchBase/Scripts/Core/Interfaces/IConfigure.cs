@@ -2,6 +2,6 @@
 {
     public interface IConfigure
     {
-        void Configure();
+        public void Configure();
     }
 }

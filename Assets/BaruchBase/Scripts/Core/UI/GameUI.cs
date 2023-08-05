@@ -1,41 +1,40 @@
-﻿using TMPro;
-using DG.Tweening;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace Baruch.UI
 {
-    public class GameUI : Singleton<GameUI>,IInit
+    public class GameUI : SubUI
     {
         [Header("Buttons")]
         [SerializeField] Button _settingsButton;
-        
+
         [Header("Components")]
         [SerializeField] SettingsPanel _settingsPanel;
-        
+      
 
-        
-        public void Init()
+
+        public override void Init()
+        {
+            _settingsButton.onClick.AddListener(_settingsPanel.Activate);
+            _settingsButton.onClick.AddListener(Core.Game.Pause);
+            _settingsButton.onClick.AddListener(OnSettingsButtonClicked);//Juice
+        }
+
+        public void OnDisable()
         {
 
-            LevelManager.OnLevelBuild += OnLevelBuild;
+        }
 
-            _settingsButton.onClick.AddListener(_settingsPanel.Activate);
-            _settingsButton.onClick.AddListener(OnSettingsButtonClicked);//Juice
-
+        public override void OnEnable()
+        {
 
         }
 
         void OnSettingsButtonClicked()
         {
-            _settingsButton.transform.DORotate(Vector3.back * 90, 0.4f,RotateMode.LocalAxisAdd).SetEase(Ease.OutQuint);
-        }
-   
-
-        private void OnLevelBuild()
-        {
-            LevelManager.OnLevelBuild -= OnLevelBuild;
+            _settingsButton.transform.DORotate(Vector3.back * 90, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuint);
         }
 
     }

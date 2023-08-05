@@ -15,12 +15,13 @@ namespace Baruch
             _freeMarbles.Clear();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            if(_freeMarbles.Add(collision.gameObject.GetInstanceID()))
+            collider.gameObject.transform.SetParent(LevelManager.Instance.CurrentLevel.FreeMarbleParent);
+
+            if(_freeMarbles.Add(collider.GetInstanceID()))
                 OnMarbleExit.Invoke();
 
-            collision.gameObject.transform.SetParent(LevelManager.Instance.CurrentLevel.FreeMarbleParent);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Baruch
 {
@@ -27,9 +28,12 @@ namespace Baruch
         internal Color GetColor(byte value)
         {
 
-            return _currentPalette.Colors[value % ColorCount];
+            return _currentPalette.Colors[value];
         }
 
-
+        internal string GetHex(byte value)
+        {
+            return _currentPalette.HexCodes[value];
+        }
     }
 }

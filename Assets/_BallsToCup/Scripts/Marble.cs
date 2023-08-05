@@ -15,6 +15,8 @@ namespace Baruch
         private void SetTrailColor(Color v)
         {
             _trailRenderer.startColor = v;
+            _trailRenderer.endColor = v;
+
         }
 
         private void FixedUpdate()

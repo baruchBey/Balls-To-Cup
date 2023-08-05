@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 
@@ -21,15 +23,20 @@ namespace Baruch
             _finishedMarbles.Clear();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {            
-            _finishedMarbles.Add(collision.gameObject.GetHashCode());
-            _marbleCountText.text = $"{_finishedMarbles.Count}/{_targetCount}";
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (_finishedMarbles.Add(collider.GetHashCode()))
+            {
+                var hex = ColorManager.Instance.GetHex(collider.GetComponent<Marble>().ID);
+                _marbleCountText.text = $"<color=#{hex}>{_finishedMarbles.Count}</color>/{_targetCount}";
+                if (!DOTween.IsTweening(_marbleCountText.transform))
+                    _marbleCountText.transform.DOPunchScale(Vector2.one * 0.13f, 0.2f, 3);
+            }
 
-            if(_finishedMarbles.Count == _targetCount)
+            if (_finishedMarbles.Count == _targetCount)
                 OnTargetReached.Invoke();
 
-            
+
         }
 
         internal void SetTarget(int target)

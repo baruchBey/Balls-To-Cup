@@ -63,46 +63,20 @@ namespace Baruch
             RenderMarbles();
 
         }
-        public bool IsSphereInViewFrustum(Vector3 sphereCenter, float sphereRadius, Camera camera)
-        {
-            Matrix4x4 vpMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
-            Vector4 sphereCenterClip = vpMatrix * new Vector4(sphereCenter.x, sphereCenter.y, sphereCenter.z, 1.0f);
-
-            // If the sphere is behind the camera, it's not in view
-            if (sphereCenterClip.w < 0f)
-                return false;
-
-            // Convert the sphere center to normalized device coordinates (NDC)
-            Vector3 sphereCenterNDC = new Vector3(sphereCenterClip.x, sphereCenterClip.y, sphereCenterClip.z) / sphereCenterClip.w;
-
-            // Check if the sphere is outside the frustum
-            float distanceSquared = sphereCenterNDC.x * sphereCenterNDC.x + sphereCenterNDC.y * sphereCenterNDC.y + sphereCenterNDC.z * sphereCenterNDC.z;
-            float radiusNDC = sphereRadius / sphereCenterClip.w;
-
-            return (distanceSquared + radiusNDC * radiusNDC) <= 1.0f;
-        }
+       
         private void RenderMarbles()
         {
-            int marblesPerColor = _marbles.Length / ColorManager.ColorCount;
-            int extraMarbles = _marbles.Length % ColorManager.ColorCount;
 
-            for (int i = 0; i < ColorManager.ColorCount; i++)
+
+            for (int i = 0; i < _marbles.Length; i++)
             {
-                int marbleStartIndex = i * marblesPerColor + Mathf.Min(i, extraMarbles);
-                int marbleCount = marblesPerColor + (i < extraMarbles ? 1 : 0);
-
-                for (int j = 0; j < marbleCount; j++)
-                {
-                    int marbleIndex = marbleStartIndex + j;
-                    if (marbleIndex < _marbles.Length)
-                    {
-                        Transform marbleTransform = _marbles[marbleIndex];
-                        marbleTransform.GetPositionAndRotation(out _positionCache, out _rotationCache);
-                        Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one);
-                        _matrices[i][j] = matrix;
-                    }
-                }
+                Transform marbleTransform = _marbles[i];
+                marbleTransform.GetPositionAndRotation(out _positionCache, out _rotationCache);
+                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one);
+                _matrices[i % ColorManager.ColorCount][i / ColorManager.ColorCount] = matrix;
             }
+
+           
 
             for (int i = 0; i < ColorManager.ColorCount; i++)
             {

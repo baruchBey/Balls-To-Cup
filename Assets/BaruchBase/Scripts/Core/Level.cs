@@ -60,17 +60,17 @@ namespace Baruch
         }
         private void CheckLevelStatus()
         {
-            _levelStatus = (FreeMarbleCount == _totalMarbleCount) ? LevelStatus.HasMarbleInBottle : LevelStatus.NoMarbleInBottle;
+            _levelStatus = (FreeMarbleCount != _totalMarbleCount) ? LevelStatus.HasMarbleInBottle : LevelStatus.NoMarbleInBottle;
 
-            _levelStatus |= (FinishedMarbleCount == _target) ? LevelStatus.TargetReached : 0;
-            _levelStatus |= (_marbleInBottleCount < _target-FinishedMarbleCount) ? LevelStatus.TargetFailed : 0;
+            _levelStatus |= (FinishedMarbleCount >= _target) ? LevelStatus.TargetReached : 0;
+            _levelStatus |= (_marbleInBottleCount + FinishedMarbleCount < _target) ? LevelStatus.TargetFailed : 0;
 
             if (_levelStatus.HasFlag(LevelStatus.TargetFailed))
             {
                 LevelFail();
                 return;
             }
-            if (_levelStatus == LevelStatus.Success)
+            if (_levelStatus.HasFlag(LevelStatus.Success) && _levelStatus.HasFlag(LevelStatus.NoMarbleInBottle))
             {
                 LevelComplete();
             }
@@ -98,14 +98,17 @@ namespace Baruch
 
             return marbles;
         }
-        
+
 
         private static void SetColorIDs(Transform[] marbles)
         {
-            marbles.ForEach(marble => { marble.GetComponent<Marble>().ID = (byte)(marble.GetSiblingIndex() % ColorManager.ColorCount); });
+            marbles.ForEach(marble =>
+            {
+                marble.GetComponent<Marble>().ID = (byte)(marble.GetSiblingIndex() % ColorManager.ColorCount);
+            });
 
         }
-       
+
 
         private void OnValidate()
         {
@@ -130,7 +133,7 @@ namespace Baruch
             }
         }
 
-       
+
 #endif
 
     }

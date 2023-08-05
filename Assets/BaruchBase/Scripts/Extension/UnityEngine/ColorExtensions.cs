@@ -11,10 +11,11 @@ namespace Baruch.Extension
             target = new Color(target.r, target.g, target.b, a);
         }
 
-        public static void SetValue(ref this Color target, float V)
+        public static Color AsValue(ref this Color target, float V)
         {
-            Color.RGBToHSV(target, out float h, out float s, out float v);
-            target = Color.HSVToRGB(h, s, V);
+            Color.RGBToHSV(target, out float h, out float s, out _);
+            return Color.HSVToRGB(h, s, V);
+            
         }public static void SetSaturation(ref this Color target, float S)
         {
             Color.RGBToHSV(target, out float h, out float s, out float v);

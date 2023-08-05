@@ -15,6 +15,7 @@ namespace Baruch.UI
 
 
         public abstract void OnEnable();
+        public abstract void OnDisable();
 
         internal void SetActive(bool v)
         {

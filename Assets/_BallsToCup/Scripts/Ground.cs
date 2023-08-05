@@ -15,7 +15,7 @@ namespace Baruch
         {
             _wastedMarbles.Clear();
         }
-
+     
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (_wastedMarbles.Add(collision.gameObject.GetInstanceID()))

@@ -6,6 +6,12 @@ using static Baruch.Finish;
 using static Baruch.BottleExit;
 using static Baruch.Ground;
 
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
 namespace Baruch
 {
     public class Level : MonoBehaviour, IConfigure
@@ -18,6 +24,7 @@ namespace Baruch
         [Header("Level")]
         [SerializeField] Finish _finish;
         [SerializeField] TextMeshPro _marbleCountText;
+        [SerializeField,Range(1f,3f)] float _marbleSize = 1f;
 
         int _marbleInBottleCount => _marbleParent.childCount;
 
@@ -34,13 +41,13 @@ namespace Baruch
         public static event Action OnLevelComplete;
         public static event Action OnLevelFail;
         LevelStatus _levelStatus;
-
+        public static float MarbleSize;
         public void Configure()
         {
             _finish.SetTarget(_target);
-
+            MarbleSize = _marbleSize;
             OnTargetReached += CheckLevelStatus;
-            OnMarbleExit += CheckLevelStatus;
+            //OnMarbleExit += CheckLevelStatus;
             OnMarbleExit += UpdateText;
             OnMarbleWasted += CheckLevelStatus;
 
@@ -55,7 +62,9 @@ namespace Baruch
         private void OnDisable()
         {
             OnTargetReached -= CheckLevelStatus;
-            OnMarbleExit -= CheckLevelStatus;
+            //OnMarbleExit -= CheckLevelStatus;
+            OnMarbleExit -= UpdateText;
+
             OnMarbleWasted -= CheckLevelStatus;
         }
         private void CheckLevelStatus()
@@ -63,14 +72,14 @@ namespace Baruch
             _levelStatus = (FreeMarbleCount != _totalMarbleCount) ? LevelStatus.HasMarbleInBottle : LevelStatus.NoMarbleInBottle;
 
             _levelStatus |= (FinishedMarbleCount >= _target) ? LevelStatus.TargetReached : 0;
-            _levelStatus |= (_marbleInBottleCount + FinishedMarbleCount < _target) ? LevelStatus.TargetFailed : 0;
+            _levelStatus |= (_totalMarbleCount - WastedMarbleCount < _target) ? LevelStatus.TargetFailed : 0;
 
             if (_levelStatus.HasFlag(LevelStatus.TargetFailed))
             {
                 LevelFail();
                 return;
             }
-            if (_levelStatus.HasFlag(LevelStatus.Success) && _levelStatus.HasFlag(LevelStatus.NoMarbleInBottle))
+            if (_levelStatus.HasFlag(LevelStatus.TargetReached))
             {
                 LevelComplete();
             }
@@ -79,21 +88,30 @@ namespace Baruch
 
         private void LevelComplete()
         {
+
+#if UNITY_EDITOR
+            Debug.Log("LEVEL COMPLETE");
+#endif
             OnLevelComplete?.Invoke();
         }
 
         private void LevelFail()
         {
+#if UNITY_EDITOR
+            Debug.Log("LEVEL FAIL");
+#endif
+
             OnLevelFail?.Invoke();
         }
 
         private void OnDrawGizmos()
         {
-            _marbleParent.ForEach(x => Gizmos.DrawSphere(x.position, x.localScale.x));
+            _marbleParent.ForEach(x => Gizmos.DrawSphere(x.position, x.GetComponent<CircleCollider2D>().radius));
         }
         internal Transform[] GetMarbleTransforms()
         {
             var marbles = _marbleParent.GetChilds();
+            _totalMarbleCount = marbles.Length;
             SetColorIDs(marbles);
 
             return marbles;
@@ -113,6 +131,8 @@ namespace Baruch
         private void OnValidate()
         {
             _target = Mathf.Min(_target, _marbleParent.childCount);
+
+            _marbleParent.GetComponentsInChildren<CircleCollider2D>().ForEach(cl => cl.radius = _marbleSize);
         }
 #if UNITY_EDITOR
         [ContextMenu("CapturePositions")]
@@ -133,8 +153,40 @@ namespace Baruch
             }
         }
 
+        private void Update()
+        {
+            EditorUtility.SetDirty(this);
 
+        }
 #endif
 
     }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(Level))]
+    public class LevelEditor : Editor
+    {
+        int _total;
+        int _inBottle => _marbleParent.childCount;
+        Transform _marbleParent;
+        private void OnEnable()
+        {
+            _marbleParent = ((Level)target).transform.FindDeepChild("Marbles");
+            _total = _inBottle;
+        }
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.LabelField($"Total: {_total}");
+            EditorGUILayout.LabelField($"InBottle: {_inBottle}");
+            EditorGUILayout.LabelField($"Free: {FreeMarbleCount}");
+            EditorGUILayout.LabelField($"Wasted: {WastedMarbleCount}");
+            EditorGUILayout.LabelField($"Finished: {FinishedMarbleCount}");
+            EditorGUILayout.EndVertical();
+        }
+        
+    }
+#endif
+    
 }

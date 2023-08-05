@@ -2,6 +2,7 @@
 {
     public enum GameState
     {
+        Idle,
         Play,
         Pause,
         LevelFailed,

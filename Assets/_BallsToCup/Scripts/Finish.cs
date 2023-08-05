@@ -42,6 +42,8 @@ namespace Baruch
         internal void SetTarget(int target)
         {
             _targetCount = target;
+            _marbleCountText.text = $"0/{_targetCount}";
+
         }
     }
 }

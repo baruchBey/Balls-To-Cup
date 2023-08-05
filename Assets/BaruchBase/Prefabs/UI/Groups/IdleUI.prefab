@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1268014608532509541}
   - component: {fileID: 2733376228908418232}
   m_Layer: 5
-  m_Name: GameUI
+  m_Name: IdleUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1268014608532509543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f61bba4c7e346cf459cb8b0dfa2d0967, type: 3}
+  m_Script: {fileID: 11500000, guid: 28017a44001bb2c4094dd91b16415dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _settingsButton: {fileID: 6032813404796038599}

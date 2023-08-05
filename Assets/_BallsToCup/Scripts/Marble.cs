@@ -14,9 +14,22 @@ namespace Baruch
 
         private void SetTrailColor(Color v)
         {
-            _trailRenderer.startColor = v;
-            _trailRenderer.endColor = v;
+            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+            alphaKeys[0].time = 0.5f;
+            alphaKeys[0].alpha = 0.5f;
+            alphaKeys[1].time = 1f;
+            alphaKeys[1].alpha = 0f;
 
+            GradientColorKey[] colorKeys = new GradientColorKey[2];
+            colorKeys[0].time = 0f;
+            colorKeys[0].color = v;
+            colorKeys[1].time = 1f;
+            colorKeys[1].color = v;
+
+            Gradient gradient = new();
+            gradient.SetKeys(colorKeys, alphaKeys);
+
+            _trailRenderer.colorGradient = gradient;
         }
 
         private void FixedUpdate()

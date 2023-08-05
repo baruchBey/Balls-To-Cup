@@ -15,7 +15,7 @@ namespace Baruch.Core
 
         public static void Initialize()
         {
-
+            FrameWork.OnFirstClick += FrameWork_OnFirstClick;
             LevelManager.OnLevelBuild += LevelManager_OnLevelBuild;
             LevelManager.OnLevelEnd += LevelManager_OnLevelEnd;
 
@@ -35,6 +35,11 @@ namespace Baruch.Core
 
         }
 
+        private static void FrameWork_OnFirstClick()
+        {
+            GameState = GameState.Play;
+        }
+
         private static void LevelManager_OnLevelEnd()
         {
             GameState = LevelManager.Instance.IsLevelSuccess ? GameState.LevelCompleted : GameState.LevelFailed;
@@ -42,7 +47,7 @@ namespace Baruch.Core
 
         private static void LevelManager_OnLevelBuild()
         {
-            GameState = GameState.Play;
+            GameState = GameState.Idle;
         }
 
         internal static void Pause()
@@ -52,7 +57,7 @@ namespace Baruch.Core
 
         internal static void Resume()
         {
-            GameState = GameState.Play;
+            GameState = GameState.Idle;
         }
     }
 }

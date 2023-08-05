@@ -14,8 +14,10 @@ namespace Baruch.UI
             _continueButton.onClick.AddListener(LevelManager.Instance.NextLevel);
         }
 
-        public void OnDisable()
+       
+        public override void OnDisable()
         {
+            throw new System.NotImplementedException();
         }
 
         public override void OnEnable()

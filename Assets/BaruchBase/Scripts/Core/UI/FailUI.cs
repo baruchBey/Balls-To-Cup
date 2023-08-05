@@ -13,9 +13,11 @@ namespace Baruch.UI
             _restartButton.onClick.AddListener(LevelManager.Instance.RestartLevel);
         }
 
-        public void OnDisable()
-        {
+       
 
+        public override void OnDisable()
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void OnEnable()

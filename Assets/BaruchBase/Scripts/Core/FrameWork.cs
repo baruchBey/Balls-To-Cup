@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 namespace Baruch.Core
 {
     [DefaultExecutionOrder(-5)]
     public class FrameWork : MonoBehaviour
     {
         [Save] private static byte _version = default;
-        
+
+        public static event Action OnFirstClick;
       
         private void Awake()
         {
@@ -29,7 +33,29 @@ namespace Baruch.Core
                 NewVersion();
             }
         }
+        private void Update()
+        {
+            if (Game.GameState==GameState.Idle && Input.GetMouseButtonDown(0))
+            {
+                if (!IsMouseOverUIElements())//Mousenot over ui elemenmts
+                    OnFirstClick.Invoke();
+            }
+        }
+        private bool IsMouseOverUIElements()
+        {
+            // Check if the mouse is over any UI elements using the EventSystem and GraphicRaycaster
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
+            eventData.position = Input.mousePosition;
 
+            // Create a list to store the Raycast results
+            var results = new List<RaycastResult>();
+
+            // Perform the Raycast
+            EventSystem.current.RaycastAll(eventData, results);
+
+            // If the list is empty, the mouse is not over any UI elements
+            return results.Count > 0;
+        }
         private static void NewVersion()
         {
 

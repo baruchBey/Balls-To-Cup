@@ -72,7 +72,7 @@ namespace Baruch
             {
                 Transform marbleTransform = _marbles[i];
                 marbleTransform.GetPositionAndRotation(out _positionCache, out _rotationCache);
-                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one);
+                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one*Level.MarbleSize);
                 _matrices[i % ColorManager.ColorCount][i / ColorManager.ColorCount] = matrix;
             }
 

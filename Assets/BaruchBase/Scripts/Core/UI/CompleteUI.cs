@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace Baruch.UI
         [SerializeField] Button _restartButton;
 
         [SerializeField] Image[] _stars;
+        [SerializeField] TMP_Text _levelText;
 
         int _target;
         int _totalMarbleCount;
@@ -53,6 +55,7 @@ namespace Baruch.UI
         }
         public override void Enable()
         {
+            _levelText.text = $"Level {LevelManager.LevelIndex+1}\r\nComplete";
             base.Enable();
 
             _target = LevelManager.Instance.CurrentLevel.Target;

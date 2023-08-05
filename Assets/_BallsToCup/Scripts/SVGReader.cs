@@ -1,61 +1,63 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Xml;
+using System.IO;
+using System.Linq;
+using Unity.VectorGraphics;
 using UnityEngine;
+using static Unity.VectorGraphics.VectorUtils;
 
 namespace Baruch
 {
     public static class SVGReader
     {
-        internal static Vector2[] Read(string svgFileName)
+        const float M = 1f/3f;
+
+        public static Vector2[] Read(string svgContent)
         {
-            List<Vector2> pointsList = new List<Vector2>();
 
-            TextAsset svg = Resources.Load<TextAsset>(svgFileName);
-            if (svg == null)
+
+            Vector2[] pointsList;
+
+
+            var sceneInfo = SVGParser.ImportSVG(new StringReader(svgContent));
+            var geometries = VectorUtils.TessellateScene(sceneInfo.Scene, new VectorUtils.TessellationOptions
             {
-                Debug.LogError("SVG file not found in Resources folder: " + svgFileName);
-                return pointsList.ToArray();
-            }
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(svg.text);
-
-            // Find all "polyline" elements in the SVG file
-            XmlNodeList polylineNodes = xmlDoc.GetElementsByTagName("polyline");
-
-            foreach (XmlNode polylineNode in polylineNodes)
-            {
-                if (polylineNode.Attributes["points"] != null)
-                {
-                    string pointsValue = polylineNode.Attributes["points"].Value;
-                    var polylinePoints = ExtractPointsFromAttributeValue(pointsValue);
-                    pointsList.AddRange(polylinePoints);
-                }
-            }
-
-            return pointsList.ToArray();
-        }
-
-        private static HashSet<Vector2> ExtractPointsFromAttributeValue(string pointsAttributeValue)
-        {
-            HashSet<Vector2> pointsList = new ();
-
-            string[] pointPairs = pointsAttributeValue.Split(' ');
-
-            foreach (string pointPair in pointPairs)
-            {
-                string[] coords = pointPair.Split(',');
-                if (coords.Length == 2 && float.TryParse(coords[0], NumberStyles.Float, CultureInfo.InvariantCulture, out float x) &&
-                    float.TryParse(coords[1], NumberStyles.Float, CultureInfo.InvariantCulture, out float y))
-                {
-                    pointsList.Add(new Vector2(x, y)/100f);
-                }
-            }
-
+                StepDistance = 2,
+                SamplingStepSize = 0.3f,
+                MaxCordDeviation = 0,
+                MaxTanAngleDeviation = 0,
+            });
+            pointsList = geometries[0].Vertices;
+            Debug.Log(pointsList.Length);
+            pointsList = Merge(pointsList, 5f);
+            Debug.Log(pointsList.Length);
+            pointsList = Relative(pointsList);
             return pointsList;
         }
+
+        private static Vector2[] Merge(Vector2[] pointsList, float v)
+        {
+            var merged = new List<Vector2>();
+            for (int i = 0; i < pointsList.Length; i++)
+            {
+                if (!merged.Any(p => Vector2.Distance(pointsList[i],p)<v))
+                    merged.Add(pointsList[i]);
+            }
+
+
+            return merged.ToArray();
+        }
+
+        private static Vector2[] Relative(Vector2[] pointsList)
+        {
+            for (int i = pointsList.Length - 1; i >= 0; i--)
+            {
+                pointsList[i] = (pointsList[i] - pointsList[0])* M;
+            }
+            return pointsList;
+        }
+
+        
+
     }
 }

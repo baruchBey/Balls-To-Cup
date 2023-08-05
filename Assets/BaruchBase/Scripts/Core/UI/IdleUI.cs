@@ -1,6 +1,7 @@
 ﻿using Baruch.Extension;
 using DG.Tweening;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,8 @@ namespace Baruch.UI
 {
     public class IdleUI : SubUI
     {
-        [Header("RectTransforms")]
+        [SerializeField] TMP_Text _levelText;
+        
 
 
         [Header("Buttons")]
@@ -19,6 +21,11 @@ namespace Baruch.UI
 
 
 
+        public override void Enable()
+        {
+            _levelText.text = $"LEVEL {LevelManager.LevelIndex+1}";
+            base.Enable();
+        }
 
         public override void Init()
         {

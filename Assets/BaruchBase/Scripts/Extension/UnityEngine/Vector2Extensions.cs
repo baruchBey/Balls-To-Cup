@@ -75,6 +75,26 @@ namespace Baruch.Extension
             return target;
 
         }
+        public static Vector2 Closest(this Vector2 from, List<Vector2> enumarable)
+        {
+            if (enumarable == null)
+                throw new ArgumentNullException(nameof(enumarable));
+
+            float distance = float.MaxValue;
+            Vector2 closest = default;
+            foreach (var item in enumarable)
+            {
+                float d = Vector2.Distance(item, from);
+                if (d < distance)
+                {
+                    closest = item;
+                    distance = d;
+                }
+            }
+         
+
+            return closest;
+        }
 
     }
 }

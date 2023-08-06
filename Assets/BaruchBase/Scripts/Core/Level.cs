@@ -25,7 +25,6 @@ namespace Baruch
         [SerializeField] Transform _marbleParent;
         [Header("Level")]
         [SerializeField] Finish _finish;
-        [SerializeField] TextMeshPro _marbleCountText;
         [SerializeField,Range(1f,3f)] float _marbleSize = 1f;
 
         public int MarbleInBottleCount => _marbleParent.childCount;
@@ -50,21 +49,20 @@ namespace Baruch
             MarbleSize = _marbleSize;
 
             OnTargetReached += CheckLevelStatus;
-            OnMarbleExit += UpdateText;
             OnMarbleWasted += CheckLevelStatus;
 
-            _marbleCountText.text = MarbleInBottleCount.ToString();
         }
-
-        private void UpdateText()
+        public void Reset()
         {
-            _marbleCountText.text = MarbleInBottleCount.ToString();
+            _marbleParent = transform.FindDeepChild("Marbles");
+            _finish = transform.FindDeepChild("Finish").GetComponent<Finish>();
+            Tube = transform.FindDeepChild("BottleExit").parent;
+            FreeMarbleParent = transform.FindDeepChild("FreeMarbleParent");
         }
 
         private void OnDisable()
         {
             OnTargetReached -= CheckLevelStatus;
-            OnMarbleExit -= UpdateText;
 
             OnMarbleWasted -= CheckLevelStatus;
         }
@@ -130,6 +128,7 @@ namespace Baruch
 
         private void OnValidate()
         {
+        
             _target = Mathf.Min(_target, _marbleParent.childCount);
 
             _marbleParent.GetComponentsInChildren<CircleCollider2D>().ForEach(cl => cl.radius = _marbleSize);

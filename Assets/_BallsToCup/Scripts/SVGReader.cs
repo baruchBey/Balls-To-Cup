@@ -22,16 +22,19 @@ namespace Baruch
             var sceneInfo = SVGParser.ImportSVG(new StringReader(svgContent));
             var geometries = VectorUtils.TessellateScene(sceneInfo.Scene, new VectorUtils.TessellationOptions
             {
-                StepDistance = 2,
+                StepDistance = 1.5f,
                 SamplingStepSize = 0.3f,
                 MaxCordDeviation = 0,
                 MaxTanAngleDeviation = 0,
             });
             pointsList = geometries[0].Vertices;
-            Debug.Log(pointsList.Length);
+
+            //PostProcess
             pointsList = Merge(pointsList, 5f);
-            Debug.Log(pointsList.Length);
+            if (pointsList[0].y > pointsList[1].y)
+                pointsList = pointsList.Reverse().ToArray();
             pointsList = Relative(pointsList);
+
             return pointsList;
         }
 

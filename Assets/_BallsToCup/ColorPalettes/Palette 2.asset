@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e3c8e08b37bfcc40a9f2f00415f6dd2, type: 3}
-  m_Name: Palette 0
+  m_Name: Palette 2
   m_EditorClassIdentifier: 
   Colors:
-  - {r: 0.78823537, g: 0.3137255, b: 0.8352942, a: 1}
-  - {r: 0.89019614, g: 0.7960785, b: 0.2627451, a: 1}
-  - {r: 0.9490197, g: 0.95294124, b: 0.6784314, a: 1}
+  - {r: 0.40000004, g: 0.24313727, b: 0.7019608, a: 1}
+  - {r: 0.21568629, g: 0.5803922, b: 0.53333336, a: 1}
+  - {r: 0.5686275, g: 0.7568628, b: 0.32941177, a: 1}
   - {r: 0.9568628, g: 0.6117647, b: 0.16862746, a: 1}
   SkyboxColor:
-    TopColor: {r: 0.5568628, g: 0.9215687, b: 0.5882353, a: 1}
-    BottomColor: {r: 0.32941177, g: 0.68235296, b: 0.23137257, a: 1}
+    TopColor: {r: 0.27450982, g: 0.32156864, b: 0.69803923, a: 1}
+    BottomColor: {r: 0.9843138, g: 0.9215687, b: 0.3254902, a: 1}
   HexCodes:
-  - F160FF
-  - FFE44B
-  - FEFFB6
+  - 9158FF
+  - 5FFFEA
+  - C0FF6F
   - FFA32D
-  GroundColor: {r: 0.9568628, g: 0.6117647, b: 0.16862746, a: 1}
+  GroundColor: {r: 0.39607847, g: 0.48627454, b: 0.5411765, a: 1}

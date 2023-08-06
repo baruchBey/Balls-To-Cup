@@ -25,7 +25,7 @@ namespace Baruch
         [SerializeField] Transform _marbleParent;
         [Header("Level")]
         [SerializeField] Finish _finish;
-        [SerializeField,Range(1f,3f)] float _marbleSize = 1f;
+        [SerializeField,Range(0.3f,3f)] float _marbleSize = 1f;
 
         public int MarbleInBottleCount => _marbleParent.childCount;
 
@@ -52,12 +52,15 @@ namespace Baruch
             OnMarbleWasted += CheckLevelStatus;
 
         }
-        public void Reset()
+        public void Create(int target, float marbleRadius)
         {
+            _marbleSize = marbleRadius;
+            _target = target;
             _marbleParent = transform.FindDeepChild("Marbles");
             _finish = transform.FindDeepChild("Finish").GetComponent<Finish>();
             Tube = transform.FindDeepChild("BottleExit").parent;
             FreeMarbleParent = transform.FindDeepChild("FreeMarbleParent");
+            OnValidate();
         }
 
         private void OnDisable()
@@ -128,9 +131,10 @@ namespace Baruch
 
         private void OnValidate()
         {
-        
-            _target = Mathf.Min(_target, _marbleParent.childCount);
+            if (!_marbleParent)
+                return;
 
+            _target = Mathf.Min(_target, _marbleParent.childCount);
             _marbleParent.GetComponentsInChildren<CircleCollider2D>().ForEach(cl => cl.radius = _marbleSize);
         }
 #if UNITY_EDITOR

@@ -15,19 +15,25 @@ namespace Baruch.UtilEditor
             filePath = "Assets" + filePath.Split("Assets")[^1];
 
             var pointsList = ((GameObject)AssetDatabase.LoadMainAssetAtPath(filePath)).GetComponent<SpriteRenderer>().sprite.vertices;
+            pointsList = PostProcess(pointsList);
+            return pointsList;
+        }
+
+        private static Vector2[] PostProcess(Vector2[] pointsList)
+        {
             pointsList = pointsList.Where((x, i) => i % 2 == 0).ToArray();
-            pointsList = Relative(pointsList,M);
+            pointsList = Relative(pointsList, M);
 
             pointsList = Merge(pointsList, 0.5f);
 
 
             if (pointsList[0].y > pointsList[1].y)
-            { 
+            {
                 pointsList = pointsList.Reverse().ToArray();
                 pointsList = Relative(pointsList);
 
             }
-            pointsList = DivideByDistance(pointsList, SVGReaderWindow.TUBE_RADIUS);
+            pointsList = DivideByDistance(pointsList, SVGTubeCreator.TUBE_RADIUS);
             return pointsList;
         }
 

@@ -3,20 +3,19 @@ using UnityEditor;
 using UnityEngine;
 
 using static Baruch.UtilEditor.SVGLevelCreator;
-using static Baruch.UtilEditor.SVGUtility;
 
 namespace Baruch.UtilEditor
 {
-    public class SVGReaderWindow : EditorWindow
+    public class SundayWindow : EditorWindow
     {
         public const int WINDOW_WIDTH = 512;
 
         private static readonly Vector2 _windowSize = new(WINDOW_WIDTH, 640f);
 
-        [MenuItem("Sunday/SVGReader")]
+        [MenuItem("Sunday/BallsToCup")]
         public static void ShowWindow()
         {
-            var window = GetWindow<SVGReaderWindow>("SVGReader");
+            var window = GetWindow<SundayWindow>("BallsToCup");
             window.maxSize = _windowSize;
             window.minSize = _windowSize;
         }
@@ -26,7 +25,14 @@ namespace Baruch.UtilEditor
         string _folderPath;
         private void OnGUI()
         {
+            EditorGUILayout.LabelField("Game Properties");
+            //Find player from scene and change rotation speed
+            //Marble Physichs Material
+            //Default Physichs Material
+            //Gravity settings
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
+            EditorGUILayout.LabelField("SVG Reader");
             string[] filePaths = Directory.GetFiles(_folderPath, "*.svg");
             GUI.enabled = true;
             if (GUILayout.Button("Bulk Create", GUILayout.Height(100)))
@@ -77,6 +83,8 @@ namespace Baruch.UtilEditor
             }
             if (EditorGUI.EndChangeCheck())
                 SaveArraysToEditorPrefs();
+
+
         }
 
         private void OnEnable()

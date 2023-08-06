@@ -13,7 +13,6 @@ namespace Baruch.UtilEditor
         public static Vector2[] Read(string filePath)
         {
             filePath = "Assets" + filePath.Split("Assets")[^1];
-
             var pointsList = ((GameObject)AssetDatabase.LoadMainAssetAtPath(filePath)).GetComponent<SpriteRenderer>().sprite.vertices;
             pointsList = PostProcess(pointsList);
             return pointsList;

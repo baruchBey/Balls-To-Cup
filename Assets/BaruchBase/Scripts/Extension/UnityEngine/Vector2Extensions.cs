@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Baruch.Extension
@@ -33,12 +34,12 @@ namespace Baruch.Extension
             return new Vector3(target.x, 0, target.y);
 
         }
-        public static Vector2 RemapMagnitude(this Vector2 target,float fromMin,float fromMax,float toMin,float toMax)
+        public static Vector2 RemapMagnitude(this Vector2 target, float fromMin, float fromMax, float toMin, float toMax)
         {
             return target.normalized * target.magnitude.Remap(fromMin, fromMax, toMin, toMax);
         }
 
-        
+
         /**
       * <summary>Set X value of this vector</summary>
       */
@@ -91,9 +92,18 @@ namespace Baruch.Extension
                     distance = d;
                 }
             }
-         
+
 
             return closest;
+        }
+
+        public static Vector2 Mean(this IEnumerable<Vector2> enumarable)
+        {
+            Vector2 sum = default;
+            enumarable.ForEach(item => { sum += item; });
+
+
+            return sum / enumarable.Count();
         }
 
     }

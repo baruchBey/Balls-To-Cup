@@ -6,7 +6,6 @@ using UnityEngine;
 using Baruch.Extension;
 using System.Linq;
 using UnityEngine.Animations;
-using Unity.VectorGraphics.Editor;
 
 namespace Baruch.UtilEditor
 {
@@ -29,9 +28,6 @@ namespace Baruch.UtilEditor
         string _folderPath;
         private void OnGUI()
         {
-            var imp = ((GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/_BallsToCup/SVGs/Vector 1.svg")).GetComponent<SpriteRenderer>().sprite.vertices;
-            Debug.Log(imp);
-            AssetPreview.GetAssetPreview(AssetDatabase.LoadAssetAtPath("Assets/_BallsToCup/SVGs/Vector 1.svg", typeof(SVGImporter)));
 
 
             string[] filePaths = Directory.GetFiles(_folderPath, "*.svg");
@@ -42,8 +38,7 @@ namespace Baruch.UtilEditor
                 for (int i = 0; i < filePaths.Length; i++)
                 {
                     string filePath = filePaths[i];
-                    string fileContent = File.ReadAllText(filePath);
-                    CreateLevel(fileContent, filePath[^5] - '0', _marbleCounts[i], _targetCounts[i]);
+                    CreateLevel(filePath, filePath[^5] - '0', _marbleCounts[i], _targetCounts[i]);
                 }
 
 
@@ -60,6 +55,7 @@ namespace Baruch.UtilEditor
                 if (!_foldout[i])
                 {
                     EditorGUILayout.EndFoldoutHeaderGroup();
+                    EditorGUI.EndChangeCheck();
                     continue;
                 }
                 EditorGUILayout.BeginHorizontal();
@@ -70,10 +66,10 @@ namespace Baruch.UtilEditor
                 _targetCounts[i] = EditorGUILayout.IntField("Target Count:", _targetCounts[i]);
 
                 EditorGUILayout.EndVertical();
+
                 if (GUILayout.Button($"Create {name}",GUILayout.Height(100)))
                 {
-                    string fileContent = File.ReadAllText(filePath);
-                    CreateLevel(fileContent, filePath[^5] - '0', _marbleCounts[i], _targetCounts[i]);
+                    CreateLevel(filePath, filePath[^5] - '0', _marbleCounts[i], _targetCounts[i]);
 
                 }
 
@@ -136,6 +132,15 @@ namespace Baruch.UtilEditor
         private static void CreateLevel(string fileContent, int id, int marbleCount, int targetCount)
         {
             var points = SVGReader.Read(fileContent);
+
+            //for (int i = 0; i < points.Length; i++)
+            //{
+            //    var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //    go.name = i.ToString();
+            //    go.transform.position = points[i];
+            //}
+            
+
             points = AddBottleExitVectors(points);
 
             var tube = CreateMesh(points, out Vector2[] hull);
@@ -232,7 +237,7 @@ namespace Baruch.UtilEditor
             return PrefabUtility.SaveAsPrefabAsset(newTube, $"Assets/_BallsToCup/Prefabs/Tubes/SVG Tubes/{newTube.name}.prefab");
         }
 
-        const float TUBE_RADIUS = 3.4042f;
+        public const float TUBE_RADIUS = 3.4042f;
         private static Mesh CreateMesh(Vector2[] points, out Vector2[] hull)
         {
 
@@ -261,7 +266,7 @@ namespace Baruch.UtilEditor
                     float angle = j * angleStep;
                     var rotatedStable = Quaternion.AngleAxis(angle, tangents[i]) * stable;
                     normals[startIndex + j] = rotatedStable;
-                    vertices[startIndex + j] = (Vector3)point + rotatedStable * TUBE_RADIUS * ((i == points.Length - 3 || i == points.Length - 2) ? 1.1f : 1f);
+                    vertices[startIndex + j] = (Vector3)point + rotatedStable * TUBE_RADIUS * ((i == points.Length - 3 || i == points.Length - 2) ? 1.15f : 1f);
                 }
 
                 if (i < points.Length - 1)

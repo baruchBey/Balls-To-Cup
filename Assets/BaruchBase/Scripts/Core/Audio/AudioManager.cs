@@ -6,10 +6,10 @@ namespace Baruch
 {
     public class AudioManager : Singleton<AudioManager>,IInit
     {
-        //TODO Repick sounds
 
 
-        [Save]public static bool AudioEnabled = default;
+        [Save] public static bool AudioEnabled = true;
+
 
         private static IReadOnlyDictionary<AudioItemType, AudioItem> _audioDictionary;
 
@@ -17,7 +17,6 @@ namespace Baruch
         private static readonly float[] _aMin = new float[] { 0.84f, 1f, 1.26f };
 
         [SerializeField] private AudioItem _pop;
-        [SerializeField] private AudioItem _whoop;
         [SerializeField] private AudioItem _blob;
         [SerializeField] private AudioItem _ching;
 
@@ -30,10 +29,9 @@ namespace Baruch
 
             _audioDictionary = new Dictionary<AudioItemType, AudioItem>
             {
-                {AudioItemType.Pop , _pop },
-                {AudioItemType.Whoop , _whoop},
-                {AudioItemType.Blob , _blob},
-                {AudioItemType.Ching , _ching},
+                {AudioItemType.StarPop , _pop },
+                {AudioItemType.BallInCup , _blob},
+                {AudioItemType.LevelCompleteGlass , _ching},
             };
         }
 

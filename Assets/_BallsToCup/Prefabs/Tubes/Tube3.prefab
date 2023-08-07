@@ -122,7 +122,7 @@ Transform:
   - {fileID: 4819945524144025392}
   - {fileID: 9117976153199925295}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6922751262635693985
 GameObject:
@@ -134,9 +134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7333497451410241922}
   - component: {fileID: 3595043470229579882}
-  - component: {fileID: 4981528967954154621}
   - component: {fileID: 1600497806233139254}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EdgeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,18 +165,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6922751262635693985}
   m_Mesh: {fileID: -584662408941624811, guid: 5b01340600dbc664ba06e2dbe68c538f, type: 3}
---- !u!114 &4981528967954154621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6922751262635693985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf22dfad15ca04e42a0209d067d64222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!68 &1600497806233139254
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -211,7 +198,7 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.3
   m_Points:
   - {x: -18.515055, y: -12.300221}
   - {x: -18.758232, y: -9.914281}

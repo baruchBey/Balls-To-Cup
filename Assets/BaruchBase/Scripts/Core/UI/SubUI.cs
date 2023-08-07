@@ -33,6 +33,9 @@ namespace Baruch.UI
         {
             if (v)
             {
+                if (gameObject.activeSelf)
+                    return;
+
                 gameObject.SetActive(true);
                 Enable();
             }

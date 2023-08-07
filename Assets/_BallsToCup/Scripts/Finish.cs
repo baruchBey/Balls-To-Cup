@@ -27,7 +27,14 @@ namespace Baruch
         {
             if (_finishedMarbles.Add(collider.GetHashCode()))
             {
-                var hex = ColorManager.Instance.GetHex(collider.GetComponent<Marble>().ID);
+                AudioManager.Instance.Play(Audio.AudioItemType.BallInCup);
+
+                var marble = collider.GetComponent<Marble>();
+                marble.transform.DOPunchScale(Vector3.forward * 1.06f, 0.3f,5);
+
+                ParticleManager.Instance.PlayInCup(marble);
+
+                var hex = ColorManager.Instance.GetHex(marble.ID);
                 _marbleCountText.text = $"<color=#{hex}>{_finishedMarbles.Count}</color>/{_targetCount}";
                 if (!DOTween.IsTweening(_marbleCountText.transform))
                     _marbleCountText.transform.DOPunchScale(Vector2.one * 0.13f, 0.2f, 3);

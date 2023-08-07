@@ -73,7 +73,8 @@ namespace Baruch
             {
                 Transform marbleTransform = _marbles[i];
                 marbleTransform.GetPositionAndRotation(out _positionCache, out _rotationCache);
-                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one*Level.MarbleSize);
+                
+                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one*Level.MarbleSize*marbleTransform.localScale.z);//Using localscale.z to individually scale marble renders
                 _matrices[i % ColorManager.ColorCount][i / ColorManager.ColorCount] = matrix;
             }
 
@@ -83,6 +84,11 @@ namespace Baruch
             {
                 Graphics.DrawMeshInstanced(_sphereMesh, 0, _materials[i], _matrices[i]);
             }
+        }
+
+        internal Material GetMaterial(byte iD)
+        {
+            return _materials[iD];
         }
     }
 }

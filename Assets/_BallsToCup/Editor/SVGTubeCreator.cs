@@ -10,6 +10,7 @@ namespace Baruch.UtilEditor
     public static class SVGTubeCreator
     {
         public const float TUBE_RADIUS = 3.4042f;
+        public const float EDGE_RADIUS = 0.3f;
 
         public static GameObject CreateTubePrefab(int id, Mesh tube, Vector2[] hull, out GameObject sceneObject)
         {
@@ -36,6 +37,7 @@ namespace Baruch.UtilEditor
             edgeCollider.name = "EdgeCollider";
             edgeCollider.layer = LayerMask.NameToLayer("Hull");
             var cl = edgeCollider.AddComponent<EdgeCollider2D>();
+            cl.edgeRadius = EDGE_RADIUS;
             cl.points = hull;
 
             var bottleExit = new GameObject();
@@ -62,7 +64,7 @@ namespace Baruch.UtilEditor
                 tangents[i] = (points[i + 1] - points[i]).normalized;
             tangents[^1] = tangents[^2];
 
-            int verticesPerPoint = 17; // You can adjust the number of vertices per point to control the tube's smoothness
+            int verticesPerPoint = 17;
             int numVertices = points.Length * verticesPerPoint;
             int numTriangles = (points.Length - 1) * 2 * (verticesPerPoint - 1);
 
@@ -113,7 +115,7 @@ namespace Baruch.UtilEditor
             tubeMesh.vertices = vertices;
             tubeMesh.triangles = triangles;
             tubeMesh.normals = normals;
-            // If you want smooth shading, you can calculate normals and tangents here
+
             tubeMesh.RecalculateNormals();
             tubeMesh.RecalculateTangents();
 

@@ -2,9 +2,9 @@
 {
     public enum AudioItemType
     {
-        Pop,
+        StarPop,
         Whoop,
-        Blob,
-        Ching,
+        BallInCup,
+        LevelCompleteGlass,
     }
 }

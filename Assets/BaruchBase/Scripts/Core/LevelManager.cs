@@ -1,7 +1,11 @@
-﻿using DG.Tweening;
+﻿using Baruch.Extension;
+using DG.Tweening;
 using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using static Baruch.Util.BaruchUtil;
 
 namespace Baruch
 {
@@ -20,6 +24,7 @@ namespace Baruch
 
         public static bool Active { get; internal set; }
 
+        IEnumerable<IPoolOwner> _poolOwner;
         public override void Awake()
         {
             
@@ -29,9 +34,11 @@ namespace Baruch
         {
             Level.OnLevelComplete += OnLevelEnd.Invoke;
             Level.OnLevelFail += OnLevelEnd.Invoke;
+            _poolOwner = FindInterfacesOfType<IPoolOwner>(includeInActive: true);
+
         }
 
-       
+
 
         public void Build()
         {
@@ -42,6 +49,8 @@ namespace Baruch
         }
         public void Unload()
         {
+            _poolOwner.ForEach(poolOwner => poolOwner.ReleaseAll());
+
             Destroy(CurrentLevel.gameObject);
 
             Active = false;

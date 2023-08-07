@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Baruch
 
         private void SetTrailColor(Color v)
         {
+            _trailRenderer.widthMultiplier = Level.MarbleSize;
+
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
             alphaKeys[0].time = 0.5f;
             alphaKeys[0].alpha = 0.5f;
@@ -41,8 +44,14 @@ namespace Baruch
         }
         private void OnDestroy()
         {
+            transform.DOKill();
+
             Destroy(GetComponent<Collider2D>());
             Destroy(GetComponent<Rigidbody2D>());
+        }
+        public void Free()
+        {
+            _trailRenderer.minVertexDistance = 0;
         }
     }
 }

@@ -45,11 +45,9 @@ namespace Baruch.UtilEditor
                 Vector2 nextPoint = pointsList[i + 1];
                 float distance = Vector2.Distance(currentPoint, nextPoint);
 
-                // Add the current point to the list
                 list.Add(currentPoint);
 
-                // If the distance between the current point and the next point is greater than the tube radius,
-                // divide the distance and add intermediate points
+             
                 if (distance > radius)
                 {
                     int divisions = Mathf.FloorToInt(distance / radius);
@@ -64,8 +62,7 @@ namespace Baruch.UtilEditor
                 }
             }
 
-            // Add the last point to the list
-            list.Add(pointsList[pointsList.Length - 1]);
+            list.Add(pointsList[^1]);
 
             return list.ToArray();
         }

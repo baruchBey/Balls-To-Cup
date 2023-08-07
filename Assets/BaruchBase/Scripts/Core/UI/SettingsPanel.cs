@@ -11,17 +11,17 @@ namespace Baruch.UI
         [SerializeField] GameObject _parent;
 
         [Header("Buttons")]
-        [SerializeField] private Toggle _audioToggle = default;
-        [SerializeField] private Toggle _hapticToggle = default;
+        [SerializeField] private Button _audioToggle = default;
+        [SerializeField] private GameObject _audioShadow= default;
+        [SerializeField] private Button _hapticToggle = default;
 
-        [SerializeField] RectTransform _panel;
 
         [SerializeField] Button _resume;
 
 
         public void Init()
         {
-            _audioToggle.onValueChanged.AddListener(OnVolumeToggle);
+            _audioToggle.onClick.AddListener(OnVolumeToggle);
 
             _resume.onClick.AddListener(Deactivate);
             _resume.onClick.AddListener(Core.Game.Resume);
@@ -29,13 +29,12 @@ namespace Baruch.UI
 
         public void Activate()
         {
-            _audioToggle.isOn = AudioManager.AudioEnabled;
+            _audioShadow.SetActive(!AudioManager.AudioEnabled);
 
             _parent.SetActive(true);
             _resume.interactable = true;
 
-            _panel.localScale = Vector3.one * 0.5f;
-            _panel.DOScale(1f, 0.2f).SetEase(Ease.OutSine);
+       
             
             _audioToggle.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutSine);
             _hapticToggle.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutSine);
@@ -44,18 +43,16 @@ namespace Baruch.UI
         public void Deactivate()
         {
             _resume.interactable = false;
-            _panel.DOScale(0.5f, 0.2f).SetEase(Ease.InSine).OnComplete(()=> _parent.SetActive(false));
 
-            _audioToggle.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InSine);
-            _hapticToggle.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InSine);
+          
         }
 
 
 
-        private void OnVolumeToggle(bool value)
+        private void OnVolumeToggle()
         {
-            AudioManager.AudioEnabled = value;
-            AudioManager.Instance.Play(AudioItemType.Pop);
+            AudioManager.AudioEnabled = !AudioManager.AudioEnabled;
+            AudioManager.Instance.Play(AudioItemType.StarPop);
         }
 
        

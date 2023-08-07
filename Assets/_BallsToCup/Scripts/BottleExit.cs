@@ -18,8 +18,9 @@ namespace Baruch
         private void OnTriggerEnter2D(Collider2D collider)
         {
             collider.gameObject.transform.SetParent(LevelManager.Instance.CurrentLevel.FreeMarbleParent);
+            collider.GetComponent<Marble>().Free();
 
-            if(_freeMarbles.Add(collider.GetInstanceID()))
+            if (_freeMarbles.Add(collider.GetInstanceID()))
                 OnMarbleExit.Invoke();
 
         }

@@ -45,6 +45,7 @@ namespace Baruch
         public static float MarbleSize;
         public void Configure()
         {
+
             _finish.SetTarget(_target);
             MarbleSize = _marbleSize;
 
@@ -179,6 +180,17 @@ namespace Baruch
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+
+            if (GUILayout.Button("SetMarblePositions"))
+            {
+                Physics2D.simulationMode = SimulationMode2D.Script;
+                for (int i = 0; i < 1200; i++)
+                {
+                    Physics2D.Simulate(1 / 240f);
+
+                }
+                Physics2D.simulationMode = SimulationMode2D.Update;
+            }
             EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField($"Total: {_total}");
             EditorGUILayout.LabelField($"InBottle: {_inBottle}");

@@ -26,7 +26,7 @@ namespace Baruch.Core
 
             Save.Load();
 
-            FindInterfacesOfType<IInit>(true).ForEach(iinit => iinit.Init());
+            FindInterfacesOfType<IInit>(includeInActive: true).ForEach(iinit => iinit.Init());
 
 
             LevelManager.Instance.Build();

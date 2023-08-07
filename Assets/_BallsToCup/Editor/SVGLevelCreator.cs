@@ -11,7 +11,7 @@ namespace Baruch.UtilEditor
     public static class SVGLevelCreator 
     {
         const float FLASK_RADIUS = 7.3f;
-        const float FLASK_AREA = FLASK_RADIUS * FLASK_RADIUS * Mathf.PI;
+        const float FLASK_AREA = (FLASK_RADIUS- EDGE_RADIUS) * (FLASK_RADIUS - EDGE_RADIUS) * Mathf.PI;
 
         public static void CreateLevel(string fileContent, int id, int marbleCount, int targetCount)
         {
@@ -100,11 +100,12 @@ namespace Baruch.UtilEditor
                 marble.transform.localPosition = Vector3.zero;
                 marbles[i] = marble.transform;
             }
-            var targetArea = 0.6f * FLASK_AREA / marbleCount;
+            //Count of circles that could fit in an area with the multiplier
+            var targetArea = 0.5f * FLASK_AREA / marbleCount;
 
             float marbleRadius = Mathf.Sqrt(targetArea / Mathf.PI);
 
-            ArrangeGridInRange(marbles, marbleRadius * 2, FLASK_RADIUS * 0.9f);
+            ArrangeGridInRange(marbles, marbleRadius * 2, (FLASK_RADIUS-EDGE_RADIUS) * 0.9f);
 
 
             var level = newLevel.AddComponent<Level>();

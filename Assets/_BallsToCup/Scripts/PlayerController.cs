@@ -11,7 +11,7 @@ namespace Baruch
         Transform _handle;
 
 
-        [SerializeField] float _rotationSpeed = 60f; // Adjust the rotation speed as needed
+        [SerializeField] float _rotationSpeed = 60f; 
         Vector2 _mousePos => Input.mousePosition;
 
         public void Init()
@@ -38,7 +38,6 @@ namespace Baruch
             }
             else if (Input.GetMouseButton(0))
             {
-                // Calculate the angle difference between the click position and the current mouse position
                 var angleDelta = Vector2.SignedAngle(_clickPosition - _handlePosition, _mousePos - _handlePosition);
                 angleDelta *= _rotationSpeed * Time.deltaTime;
 

@@ -10,7 +10,7 @@ namespace Baruch
 
         [SerializeField] Shader _marbleShader;
         [SerializeField] Mesh _sphereMesh;
-        [SerializeField]Material _grey;
+        [SerializeField] Material _grey;
 
 
         Material[] _materials;
@@ -60,35 +60,36 @@ namespace Baruch
 
         void Update()
         {
-            if(LevelManager.Active)
+            if (LevelManager.Active)
                 RenderMarbles();
 
         }
-       
+
+
         private void RenderMarbles()
         {
-
 
             for (int i = 0; i < _marbles.Length; i++)
             {
                 Transform marbleTransform = _marbles[i];
                 marbleTransform.GetPositionAndRotation(out _positionCache, out _rotationCache);
-                
-                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, Vector3.one*Level.MarbleSize*marbleTransform.localScale.z);//Using localscale.z to individually scale marble renders
+
+                float marbleSize = Level.MarbleSize * marbleTransform.localScale.z;//Using localscale.z to individually scale marble renders
+                Matrix4x4 matrix = Matrix4x4.TRS(_positionCache, _rotationCache, marbleSize * Vector3.one);
                 _matrices[i % ColorManager.ColorCount][i / ColorManager.ColorCount] = matrix;
             }
 
-           
 
             for (int i = 0; i < ColorManager.ColorCount; i++)
-            {
-                Graphics.DrawMeshInstanced(_sphereMesh, 0, _materials[i], _matrices[i]);
-            }
+                for (int j = 0; j < _matrices[i].Length; j++)
+                {
+                    bool isWasted = (_matrices[i][j][2, 2] < 0);
+                    Graphics.DrawMesh(_sphereMesh, _matrices[i][j], isWasted ? _grey : _materials[i], 0);
+                }  
+
+
+
         }
 
-        internal Material GetMaterial(byte iD)
-        {
-            return _materials[iD];
-        }
     }
 }

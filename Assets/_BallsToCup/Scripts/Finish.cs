@@ -27,12 +27,10 @@ namespace Baruch
         {
             if (_finishedMarbles.Add(collider.GetHashCode()))
             {
-                AudioManager.Instance.Play(Audio.AudioItemType.BallInCup);
 
                 var marble = collider.GetComponent<Marble>();
-                marble.transform.DOPunchScale(Vector3.forward * 1.06f, 0.3f,5);
-
-                ParticleManager.Instance.PlayInCup(marble);
+                marble.Finished();
+                
 
                 var hex = ColorManager.Instance.GetHex(marble.ID);
                 _marbleCountText.text = $"<color=#{hex}>{_finishedMarbles.Count}</color>/{_targetCount}";

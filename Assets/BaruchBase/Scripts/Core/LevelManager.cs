@@ -18,6 +18,8 @@ namespace Baruch
 
         [SerializeField] Level[] _levels;
 
+        public Level[] Levels => _levels;
+
        
         [HideInInspector]public Level CurrentLevel;
         internal bool IsLevelSuccess => CurrentLevel.IsCompleted;
@@ -58,6 +60,7 @@ namespace Baruch
 
         internal static void NextLevel()
         {
+            
             Instance.Unload();
             LevelIndex++;
             DOVirtual.DelayedCall(Time.deltaTime * 1.1f, Instance.Build);//1 FrameDelay

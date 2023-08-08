@@ -43,10 +43,13 @@ namespace Baruch.Core
         private static void LevelManager_OnLevelEnd()
         {
             GameState = LevelManager.Instance.IsLevelSuccess ? GameState.LevelCompleted : GameState.LevelFailed;
+
         }
 
         private static void LevelManager_OnLevelBuild()
         {
+            Save.SaveGame();
+
             GameState = GameState.Idle;
         }
 

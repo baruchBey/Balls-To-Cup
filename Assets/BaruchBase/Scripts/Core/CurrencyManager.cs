@@ -22,6 +22,7 @@ namespace Baruch
 
         public static uint PremiumBalance { get => _premiumBalance; set { _premiumBalance = value; OnPremiumBalanceChanged(); } }
 
+        public static int[] StarToCoin = new int[] { 20, 50, 100 };
         static readonly HashSet<IBalance> _balanceInterfaces = new();
         static readonly HashSet<IPremiumBalance> _premiumBalanceInterfaces = new();
 

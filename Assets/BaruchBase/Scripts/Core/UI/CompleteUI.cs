@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,12 +14,14 @@ namespace Baruch.UI
         [SerializeField] Image[] _stars;
         [SerializeField] Transform[] _glows;
         [SerializeField] TMP_Text _levelText;
+        [SerializeField] TMP_Text _gainedText;
 
         int _target;
         int _totalMarbleCount;
 
         Tween _scaleTween;
 
+        int _currentStar;
         private void Awake()
         {
             foreach (var item in _glows)
@@ -31,6 +34,7 @@ namespace Baruch.UI
         }
         public override void Init()
         {
+            _continueButton.onClick.AddListener(Gain);
             _continueButton.onClick.AddListener(LevelManager.NextLevel);
             _restartButton.onClick.AddListener(LevelManager.RestartLevel);
             Finish.OnTargetReached += Finish_OnTargetReached;
@@ -38,48 +42,51 @@ namespace Baruch.UI
 
         }
 
+
+
         private void BottleExit_OnMarbleExit()
         {
             if (LevelManager.Instance.CurrentLevel.MarbleInBottleCount == 0 && !_scaleTween.IsActive())
             {
                 _scaleTween = _continueButton.transform.parent.DOScale(1.1f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+                AudioManager.Instance.Play(Audio.AudioItemType.LevelCompleteGlass);
+
             }
         }
 
         private void Finish_OnTargetReached()
         {
-            var star2 = Finish.FinishedMarbleCount >= (_target + _totalMarbleCount) / 2;
-            var star3 = Finish.FinishedMarbleCount == _totalMarbleCount;
+            bool star1 = Finish.FinishedMarbleCount >= (_target + _totalMarbleCount) / 2;
+            bool star2 = Finish.FinishedMarbleCount == _totalMarbleCount;
 
-            if (star2 && _stars[1].color == Color.white)
+            if (star1 && _currentStar == 0)
             {
-                AudioManager.Instance.Play(Audio.AudioItemType.StarPop);
+                _currentStar = 1;
+
                 _stars[1].transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 3);
+                _gainedText.text = $"+{CurrencyManager.StarToCoin[1]}<sprite=0>";
             }
 
-            _stars[1].color = star2 ? Color.yellow : Color.white;
-            _glows[1].localScale = star2 ? Vector2.one * 3 : Vector2.one;
+            _stars[1].color = star1 ? Color.yellow : Color.white;
+            _glows[1].localScale = star1 ? Vector2.one * 3 : Vector2.one;
 
-
-            if (star3)
+            if (star2)
             {
-                AudioManager.Instance.Play(Audio.AudioItemType.StarPop);
+                _currentStar = 2;
+                _gainedText.text = $"+{CurrencyManager.StarToCoin[2]}<sprite=0>";
+
                 _stars[2].transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 3);
             }
 
-            _stars[2].color = star3 ? Color.yellow : Color.white;
-            _glows[2].localScale = star3 ? Vector2.one * 3 : Vector2.one;
+            _stars[2].color = star2 ? Color.yellow : Color.white;
+            _glows[2].localScale = star2 ? Vector2.one * 3 : Vector2.one;
 
-
-
-            if (Finish.FinishedMarbleCount == _totalMarbleCount && !_scaleTween.IsActive())
+            if (star2 && !_scaleTween.IsActive())
             {
                 _scaleTween = _continueButton.transform.parent.DOScale(1.1f, 0.3f).SetLoops(-1, LoopType.Yoyo);
-
-                AudioManager.Instance.Play(Audio.AudioItemType.LevelCompleteGlass);
-
             }
         }
+
         public override void Disable()
         {
             base.Disable();
@@ -97,7 +104,9 @@ namespace Baruch.UI
             _totalMarbleCount = LevelManager.Instance.CurrentLevel.TotalMarbleCount;
 
 
+            _currentStar = 0;
 
+            _gainedText.text = $"+{CurrencyManager.StarToCoin[0]}<sprite=0>";
             _stars[1].color = Color.white;
             _stars[2].color = Color.white;
 
@@ -106,6 +115,11 @@ namespace Baruch.UI
 
 
 
+        }
+        private void Gain()
+        {
+
+            ParticleManager.Instance.PlayGained(CurrencyManager.StarToCoin[_currentStar]);
         }
 
     }

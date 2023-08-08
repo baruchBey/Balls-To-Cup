@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pop:
-    Clip: {fileID: 8300000, guid: 72faebc4d01de9b4eac5813403f8b2b8, type: 3}
+    Clip: {fileID: 8300000, guid: a96b76d4b834243e8af51dc056406ffb, type: 3}
   _blob:
     Clip: {fileID: 8300000, guid: a0213fbaca49de0459aa6bd18d930aa3, type: 3}
   _ching:

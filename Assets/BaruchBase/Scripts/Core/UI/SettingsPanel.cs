@@ -52,7 +52,7 @@ namespace Baruch.UI
         private void OnVolumeToggle()
         {
             AudioManager.AudioEnabled = !AudioManager.AudioEnabled;
-            AudioManager.Instance.Play(AudioItemType.StarPop);
+            AudioManager.Instance.Play(AudioItemType.BalanceGain);
         }
 
        

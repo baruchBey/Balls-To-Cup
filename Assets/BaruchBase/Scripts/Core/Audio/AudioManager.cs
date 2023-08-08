@@ -29,7 +29,7 @@ namespace Baruch
 
             _audioDictionary = new Dictionary<AudioItemType, AudioItem>
             {
-                {AudioItemType.StarPop , _pop },
+                {AudioItemType.BalanceGain , _pop },
                 {AudioItemType.BallInCup , _blob},
                 {AudioItemType.LevelCompleteGlass , _ching},
             };
@@ -39,8 +39,15 @@ namespace Baruch
 
         public void Play(AudioItemType itemType)
         {
+
             if (!AudioEnabled)
                 return;
+
+            if (itemType == AudioItemType.LevelCompleteGlass)
+            {
+                _audioSources[0].PlayOneShot(_audioDictionary[itemType].Clip);
+                return;
+            }
 
             float pitch = _aMin[++_counter % _aMin.Length];
 

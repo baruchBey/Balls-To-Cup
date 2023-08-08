@@ -16,12 +16,15 @@ namespace Baruch
             _wastedMarbles.Clear();
         }
      
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (_wastedMarbles.Add(collision.gameObject.GetInstanceID()))
+            if (_wastedMarbles.Add(collider.gameObject.GetInstanceID()))
+            {
                 OnMarbleWasted.Invoke();
+                collider.GetComponent<Marble>().Wasted();//Decolor the marbles
 
-            //Decolor the marbles mb 
+            }
+
         }
     }
 

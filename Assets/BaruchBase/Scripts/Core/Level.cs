@@ -92,17 +92,11 @@ namespace Baruch
         private void LevelComplete()
         {
 
-#if UNITY_EDITOR
-            Debug.Log("LEVEL COMPLETE");
-#endif
             OnLevelComplete?.Invoke();
         }
 
         private void LevelFail()
         {
-#if UNITY_EDITOR
-            Debug.Log("LEVEL FAIL");
-#endif
             OnLevelFail?.Invoke();
         }
 

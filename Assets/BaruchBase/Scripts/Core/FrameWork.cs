@@ -60,7 +60,6 @@ namespace Baruch.Core
         {
 
 #if UNITY_EDITOR
-            Debug.Log($"NewVersion : {_version}");
 #endif
 
         }

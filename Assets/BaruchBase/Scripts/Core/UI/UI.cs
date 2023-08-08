@@ -48,7 +48,6 @@ namespace Baruch.UI
                 case GameState.LevelCompleted:
                     _completeUI.SetActive(true);
 
-                    //_gameUI.SetActive(false);
                     _failUI.SetActive(false);
                     _idleUI.SetActive(false);
 

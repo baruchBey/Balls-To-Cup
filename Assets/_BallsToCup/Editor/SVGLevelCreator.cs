@@ -119,8 +119,15 @@ namespace Baruch.UtilEditor
             }
             Physics2D.simulationMode = SimulationMode2D.Update;
 
-
-            PrefabUtility.SaveAsPrefabAsset(newLevel, $"Assets/_BallsToCup/Prefabs/LevelPrefabs/SVG Levels/{newLevel.name}.prefab");
+            PrefabUtility.SaveAsPrefabAssetAndConnect(newLevel, $"Assets/_BallsToCup/Prefabs/LevelPrefabs/SVG Levels/{newLevel.name}.prefab",InteractionMode.AutomatedAction);
+            var levels = GameObject.Find("LevelManager").GetComponent<LevelManager>().Levels;
+            for (int i = 0; i < levels.Length; i++)
+            {
+                if (!levels[i])
+                {
+                    levels[i] = ((GameObject)AssetDatabase.LoadAssetAtPath($"Assets/_BallsToCup/Prefabs/LevelPrefabs/SVG Levels/{newLevel.name}.prefab", typeof(GameObject))).GetComponent<Level>();
+                }
+            }
 
             GameObject.DestroyImmediate(newLevel);//Destroy Scene object
         }
@@ -128,14 +135,11 @@ namespace Baruch.UtilEditor
         private static void ArrangeGridInRange(Transform[] marbles, float marbleDiameter, float flaskRadius)
         {
 
-            // Calculate the maximum number of marbles that can fit within the flask area
             int maxMarblesCount = Mathf.FloorToInt((Mathf.PI * flaskRadius * flaskRadius) / (marbleDiameter * marbleDiameter));
 
-            // Calculate the number of rows and columns for a dense grid
             int rows = Mathf.CeilToInt(Mathf.Sqrt(maxMarblesCount));
             int columns = Mathf.CeilToInt(maxMarblesCount / (float)rows);
 
-            // Calculate the spacing between marbles to create a dense grid
             float spacingX = 2.0f * flaskRadius / columns;
             float spacingY = 2.0f * flaskRadius / rows;
 

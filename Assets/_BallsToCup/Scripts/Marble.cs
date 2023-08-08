@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Baruch
 {
@@ -52,6 +53,21 @@ namespace Baruch
         public void Free()
         {
             _trailRenderer.minVertexDistance = 0;
+        }
+
+        internal void Wasted()
+        {
+            _trailRenderer.emitting = false;
+            transform.localScale = new Vector3(1, 1, -1);
+            
+        }
+
+        internal void Finished()
+        {
+            AudioManager.Instance.Play(Audio.AudioItemType.BallInCup);
+            transform.DOPunchScale(Vector3.forward * 1.06f, 0.3f, 5);
+
+            ParticleManager.Instance.PlayInCup(this);
         }
     }
 }

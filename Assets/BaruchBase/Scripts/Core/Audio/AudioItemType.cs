@@ -2,7 +2,7 @@
 {
     public enum AudioItemType
     {
-        StarPop,
+        BalanceGain,
         Whoop,
         BallInCup,
         LevelCompleteGlass,

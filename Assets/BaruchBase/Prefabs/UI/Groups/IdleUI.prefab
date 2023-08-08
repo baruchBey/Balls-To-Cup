@@ -34,6 +34,7 @@ RectTransform:
   - {fileID: 927243119107287568}
   - {fileID: 3766781999997938617}
   - {fileID: 2550968811383411012}
+  - {fileID: 6149904709423666443}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlidingUIElements:
   - _rectTransform: {fileID: 976011768147482542}
-    _enabledPosition: {x: -130.73392, y: 759.20593}
+    _enabledPosition: {x: -130.7339, y: 759.20593}
     _disabledPosition: {x: 93.7, y: 759.20593}
   - _rectTransform: {fileID: 927243119107287568}
     _enabledPosition: {x: 67.19101, y: 762}
@@ -79,6 +80,51 @@ MonoBehaviour:
   _levelText: {fileID: 8684969923598076292}
   _settingsButton: {fileID: 2214403352385492034}
   _settingsPanel: {fileID: 3766781999997938616}
+--- !u!1 &3665826582009053127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6149904709423666443}
+  - component: {fileID: 2895156324972220627}
+  m_Layer: 5
+  m_Name: GainParticleTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6149904709423666443
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665826582009053127}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1268014608532509540}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -55.65854, y: 759.20593}
+  m_SizeDelta: {x: 96.8505, y: 109.06}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2895156324972220627
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665826582009053127}
+  m_CullTransparentMesh: 1
 --- !u!1 &4790654450224214086
 GameObject:
   m_ObjectHideFlags: 0

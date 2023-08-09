@@ -9,6 +9,7 @@ namespace Baruch
 
     public class ColorPaletteSO : ScriptableObject, IConfigure
     {
+       
         public Color[] Colors;
         public SkyboxColor SkyboxColor;
 

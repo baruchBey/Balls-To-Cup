@@ -143,9 +143,12 @@ namespace Baruch.UtilEditor
 
         private void ReadMe()
         {
-            EditorPrefs.DeleteAll();
-
-            EditorGUILayout.LabelField("Lorem Ipsum");
+            GUIStyle myCustomStyle = new GUIStyle(GUI.skin.GetStyle("label"))
+            {
+                wordWrap = true,
+                richText = true,
+            };
+            EditorGUILayout.LabelField("Welcome to my test task! Thank you for taking the time to review it. My objective was to successfully complete all the required tasks, including the bonus ones. To create SVG levels, simply ensure that your SVG files are placed within the <b>_BallsToCup/SVGs/</b> directory. Once these files are in place, you'll be able to view the specifics within the level creator menu.After creating the levels developer is recommended to change \"Parent\" transform position of the level.\r\n\r\nWhen it comes to controls, I've implemented two different styles: one originating from the middle of the screen and the other from the handle. In the multi-maze scenario, the puzzle consistently remains centered. However, in the case of BallsToCups that is different, <b>control is angle-based</b>, offering two potential solutions. You have the flexibility to switch between these solutions through either the GameProperties menu or the PlayerController.\r\n\r\nFor clarification, it's important to note that all <b>rendering processes are handled within MarbleManager</b>. Additionally, <b>the game employs 2D physics</b> to enhance the overall experience.", myCustomStyle, GUILayout.Width(WINDOW_WIDTH));
 
         }
 

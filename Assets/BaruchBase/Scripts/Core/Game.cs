@@ -22,7 +22,7 @@ namespace Baruch.Core
 
             IsInitialized = false;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 120;
 
             Save.Load();
 

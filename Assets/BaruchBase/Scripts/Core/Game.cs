@@ -56,11 +56,13 @@ namespace Baruch.Core
         internal static void Pause()
         {
             GameState = GameState.Pause;
+            Time.timeScale = 0;
         }
 
         internal static void Resume()
         {
             GameState = GameState.Idle;
+            Time.timeScale = 1;
         }
     }
 }

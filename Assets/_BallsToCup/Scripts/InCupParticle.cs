@@ -7,14 +7,15 @@ namespace Baruch
 {
     public class InCupParticle : MonoBehaviour
     {
-        [SerializeField] ParticleSystemRenderer _particleSystemRenderer;
+        [SerializeField] ParticleSystem _particleSystem;
         internal void SetColor(Color color)
         {
-            _particleSystemRenderer.material.color = color;
+            var main = _particleSystem.main;
+            main.startColor = color;
         }
         private void OnValidate()
         {
-            _particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
+            _particleSystem = GetComponent<ParticleSystem>();
         }
       
     }

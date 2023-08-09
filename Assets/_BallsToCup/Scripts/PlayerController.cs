@@ -32,7 +32,6 @@ namespace Baruch
         }
 
 
-
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -44,6 +43,7 @@ namespace Baruch
             {
                 var angleDelta = Vector2.SignedAngle(_clickPosition - (_fromHandle ? _handlePosition : _middlePosition), _mousePos - (_fromHandle ? _handlePosition : _middlePosition));
                 angleDelta *= _rotationSpeed * Time.deltaTime * 60;
+                angleDelta = Mathf.Clamp(angleDelta, -30f, 30f);
 
                 _currentZRotation += angleDelta;
 
@@ -52,5 +52,14 @@ namespace Baruch
                 _clickPosition = Input.mousePosition;
             }
         }
+        //Collecting data to clamp
+        //List<float> _angleData = new List<float>();
+
+        //private void OnDestroy()
+        //{
+        //    Debug.Log("Max:"+ _angleData.Max());
+        //    Debug.Log("Min:" + _angleData.Min());
+        //    Debug.Log("Median:" + _angleData.Sum() / _angleData.Count);
+        //}
     }
 }

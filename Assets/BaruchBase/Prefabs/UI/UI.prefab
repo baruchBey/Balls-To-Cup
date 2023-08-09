@@ -366,10 +366,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: IdleUI
       objectReference: {fileID: 0}
-    - target: {fileID: 1268014608532509543, guid: 7fe2a34986bc41b4b94390b2b88f6bdd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3769813296246936480, guid: 7fe2a34986bc41b4b94390b2b88f6bdd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

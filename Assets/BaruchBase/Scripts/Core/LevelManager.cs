@@ -2,6 +2,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -63,13 +64,24 @@ namespace Baruch
             
             Instance.Unload();
             LevelIndex++;
-            DOVirtual.DelayedCall(Time.deltaTime * 1.1f, Instance.Build);//1 FrameDelay
+
+            Instance.DelayedBuild();
+        }
+        public void DelayedBuild()
+        {
+            StartCoroutine(DelayedBuildCoroutine());
+        }
+        public IEnumerator DelayedBuildCoroutine()
+        {
+            yield return null;
+            Build();
         }
 
         internal static void RestartLevel()
         {
             Instance.Unload();
-            DOVirtual.DelayedCall(Time.deltaTime * 1.1f, Instance.Build);//1 FrameDelay
+            Instance.DelayedBuild();
+
         }
     }
 }

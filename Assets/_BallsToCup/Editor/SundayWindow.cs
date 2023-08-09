@@ -4,23 +4,11 @@ using UnityEditor;
 using UnityEngine;
 
 using static Baruch.UtilEditor.SVGLevelCreator;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Baruch.UtilEditor
 {
     public class SundayWindow : EditorWindow
     {
-        
-        private void OnProjectChange()
-        {
-            if (EditorPrefs.GetBool("ShowSunday", true))
-            {
-                ShowWindow();
-                EditorPrefs.SetBool("ShowSunday", false);
-            }
-        }
-     
-
         public const int WINDOW_WIDTH = 512;
 
         private static readonly Vector2 _windowSize = new(WINDOW_WIDTH, 640f);
@@ -53,7 +41,7 @@ namespace Baruch.UtilEditor
 
         private static readonly Vector2 _headerSize = new(_windowSize.x, HEADER_HEIGHT);
         public const float HEADER_HEIGHT = 48f;
-    
+
 
         public enum BallToCupModuleEnum : byte
         {
@@ -102,29 +90,21 @@ namespace Baruch.UtilEditor
             _folderPath = Application.dataPath + "/_BallsToCup/SVGs";
 
             var vectorCount = Directory.GetFiles(_folderPath, "*.svg").Length;
+
             _foldout = new bool[vectorCount];
             _marbleCounts = new int[vectorCount];
             _targetCounts = new int[vectorCount];
 
             // Load the data from EditorPrefs and convert back to arrays
-            string foldoutJson = EditorPrefs.GetString("FoldoutData", "");
-            string marbleCountsJson = EditorPrefs.GetString("MarbleCountsData", "");
-            string targetCountsJson = EditorPrefs.GetString("TargetCountsData", "");
+            string foldoutJson = EditorPrefs.GetString("FoldoutData", "{\"Data\":[false,false,false]}");
+            string marbleCountsJson = EditorPrefs.GetString("MarbleCountsData", "{\"Data\":[100,60,80]}");
+            string targetCountsJson = EditorPrefs.GetString("TargetCountsData", "{\"Data\":[40,45,35]}");
 
-            if (!string.IsNullOrEmpty(foldoutJson))
-            {
-                _foldout = JsonUtility.FromJson<Wrapper<bool>>(foldoutJson).Data;
-            }
+            ArrayResize(vectorCount);
 
-            if (!string.IsNullOrEmpty(marbleCountsJson))
-            {
-                _marbleCounts = JsonUtility.FromJson<Wrapper<int>>(marbleCountsJson).Data;
-            }
-
-            if (!string.IsNullOrEmpty(targetCountsJson))
-            {
-                _targetCounts = JsonUtility.FromJson<Wrapper<int>>(targetCountsJson).Data;
-            }
+            _foldout = JsonUtility.FromJson<Wrapper<bool>>(foldoutJson).Data;
+            _marbleCounts = JsonUtility.FromJson<Wrapper<int>>(marbleCountsJson).Data;
+            _targetCounts = JsonUtility.FromJson<Wrapper<int>>(targetCountsJson).Data;
 
             SaveArraysToEditorPrefs();
 
@@ -140,7 +120,7 @@ namespace Baruch.UtilEditor
             rect.width = _headerSize.x;
 
             ActiveTab = (BallToCupModuleEnum)GUI.Toolbar(rect, (int)ActiveTab, _tabLabels);
-            
+
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.Space(HEADER_HEIGHT);
@@ -163,6 +143,8 @@ namespace Baruch.UtilEditor
 
         private void ReadMe()
         {
+            EditorPrefs.DeleteAll();
+
             EditorGUILayout.LabelField("Lorem Ipsum");
 
         }
@@ -183,18 +165,7 @@ namespace Baruch.UtilEditor
 
 
             }
-            var tempFoldout = _foldout;
-            _foldout = new bool[filePaths.Length];
-            Array.Copy(tempFoldout,_foldout,Mathf.Min(tempFoldout.Length, _foldout.Length));
-
-            var tempMarble = _marbleCounts;
-            _marbleCounts = new int[filePaths.Length];
-            Array.Copy(tempMarble, _marbleCounts, Mathf.Min(tempMarble.Length, _marbleCounts.Length));
-
-            var tempTarget = _targetCounts;
-            _targetCounts = new int[filePaths.Length];
-            Array.Copy(tempTarget, _targetCounts, Mathf.Min(tempTarget.Length, _targetCounts.Length));
-
+            ArrayResize(filePaths.Length);
 
             EditorGUI.BeginChangeCheck();
             for (int i = 0; i < filePaths.Length; i++)
@@ -232,6 +203,21 @@ namespace Baruch.UtilEditor
                 SaveArraysToEditorPrefs();
         }
 
+        private void ArrayResize(int lenght)
+        {
+            var tempFoldout = _foldout;
+            _foldout = new bool[lenght];
+            Array.Copy(tempFoldout, _foldout, Mathf.Min(tempFoldout.Length, _foldout.Length));
+
+            var tempMarble = _marbleCounts;
+            _marbleCounts = new int[lenght];
+            Array.Copy(tempMarble, _marbleCounts, Mathf.Min(tempMarble.Length, _marbleCounts.Length));
+
+            var tempTarget = _targetCounts;
+            _targetCounts = new int[lenght];
+            Array.Copy(tempTarget, _targetCounts, Mathf.Min(tempTarget.Length, _targetCounts.Length));
+        }
+
         private void GameProperties()
         {
             EditorGUILayout.LabelField("Game Properties");
@@ -239,7 +225,7 @@ namespace Baruch.UtilEditor
             EditorGUILayout.Space();
 
             EditorGUILayout.PropertyField(_rotationSensitivityProperty, new GUIContent("Control Sensitivity"));
-            EditorGUILayout.PropertyField(_rotationFromHandleOrMiddle, new GUIContent("From Handle(Or Middle)","Default Is True"));
+            EditorGUILayout.PropertyField(_rotationFromHandleOrMiddle, new GUIContent("From Handle(Or Middle)", "Default Is True"));
             _serializedPlayerController.ApplyModifiedProperties();
 
 
@@ -259,7 +245,7 @@ namespace Baruch.UtilEditor
             _marblePhysicsObject.ApplyModifiedProperties();
             EditorGUILayout.Space();
 
-            Physics2D.gravity = Vector2.down * EditorGUILayout.FloatField(new GUIContent("Gravity Power","12 for more snappy gravity Default is 9.81"), -Physics2D.gravity.y);
+            Physics2D.gravity = Vector2.down * EditorGUILayout.FloatField(new GUIContent("Gravity Power", "12 for more snappy gravity Default is 9.81"), -Physics2D.gravity.y);
         }
 
         private void SaveArraysToEditorPrefs()

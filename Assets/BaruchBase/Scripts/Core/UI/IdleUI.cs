@@ -29,7 +29,7 @@ namespace Baruch.UI
 
         public override void Init()
         {
-            _settingsButton.onClick.AddListener(_settingsPanel.Activate);
+            _settingsButton.onClick.AddListener(_settingsPanel.OpenSettings);
             _settingsButton.onClick.AddListener(Core.Game.Pause);
             _settingsButton.onClick.AddListener(OnSettingsButtonClicked);//Juice
         }

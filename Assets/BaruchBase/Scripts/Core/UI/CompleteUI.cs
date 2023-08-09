@@ -13,10 +13,14 @@ namespace Baruch.UI
 
         [SerializeField] Image[] _stars;
         [SerializeField] Transform[] _glows;
+        [SerializeField] TMP_Text[] _starTargetsText;
+        int[] _starTargets = new int[3];
+
         [SerializeField] TMP_Text _levelText;
         [SerializeField] TMP_Text _gainedText;
 
         int _target;
+
         int _totalMarbleCount;
 
         Tween _scaleTween;
@@ -37,12 +41,20 @@ namespace Baruch.UI
             _continueButton.onClick.AddListener(Gain);
             _continueButton.onClick.AddListener(LevelManager.NextLevel);
             _restartButton.onClick.AddListener(LevelManager.RestartLevel);
+            Level.OnLevelComplete += Level_OnLevelComplete;
             Finish.OnTargetReached += Finish_OnTargetReached;
             BottleExit.OnMarbleExit += BottleExit_OnMarbleExit;
 
         }
 
-
+        private void Level_OnLevelComplete()
+        {
+            _starTargets = new int[3] { _target, (_target + _totalMarbleCount) / 2, _totalMarbleCount };
+            for (int i = 0; i < _starTargetsText.Length; i++)
+            {
+                _starTargetsText[i].text = _starTargets[i].ToString(); 
+            }
+        }
 
         private void BottleExit_OnMarbleExit()
         {
@@ -56,8 +68,8 @@ namespace Baruch.UI
 
         private void Finish_OnTargetReached()
         {
-            bool star1 = Finish.FinishedMarbleCount >= (_target + _totalMarbleCount) / 2;
-            bool star2 = Finish.FinishedMarbleCount == _totalMarbleCount;
+            bool star1 = Finish.FinishedMarbleCount >= _starTargets[1];
+            bool star2 = Finish.FinishedMarbleCount == _starTargets[2];
 
             if (star1 && _currentStar == 0)
             {
